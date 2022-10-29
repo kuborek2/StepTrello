@@ -1,0 +1,14 @@
+.footerLayout {
+    margin: 0px;
+    padding: 0px;
+    overflow: hidden;
+    padding: 15px 30px 15px 30px;
+    width: 90vw;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    margin: auto;
+}
+
+.socialMedia {
+    display: flex;
+}
