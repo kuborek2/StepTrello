@@ -1,4 +1,4 @@
-import './frontPage.css'
+import './FrontPage.css'
 import Footer from './Footer'
 
 const FrontPage = () => {
