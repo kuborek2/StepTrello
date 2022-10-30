@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import './FrontPage.css'
 import Footer from './Footer'
 
@@ -17,18 +18,20 @@ const FrontPage = () => {
                         Register today to see how smoothly your day can go.
                     </p>
                     <div className='buttonSpace'>
-                        <button>
+                        <Link to="access/signin">
+                        <button className="navButton">
                             Sign in
                         </button>
-                        <button>
-                            Register
-                        </button>
+                        </Link>
+                        <Link to="access/register">
+                            <button className="navButton">
+                                Register
+                            </button>
+                        </Link>
                 </div>
                 </article>
             </div>
-            <footer>
-                <Footer/>
-            </footer>
+            <Footer/>
         </div>
     );
   }

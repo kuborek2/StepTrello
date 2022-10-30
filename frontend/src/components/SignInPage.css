@@ -1,0 +1,25 @@
+.formBox {
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    width: 100%;
+    height: calc(100vh - 75px);
+    border: 20px solid #E3FFFB;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+form > input {
+    margin-bottom: 10px;
+    width: 20vw;
+}
+
+form > button {
+    margin-top: 10px;
+    width: 8vw;
+    height: 5vh;
+    position: relative;
+    left: 50%;
+    transform: translate(-50%);
+}

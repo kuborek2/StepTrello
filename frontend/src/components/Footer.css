@@ -3,9 +3,9 @@
     padding: 0px;
     overflow: hidden;
     padding: 15px 30px 15px 30px;
-    width: 90vw;
+    width: 100%;
     display: grid;
-    grid-template-columns: 50% 50%;
+    grid-template-columns: 45% 45%;
     margin: auto;
     background-color: #C1FCF5;
 }
