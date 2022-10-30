@@ -2,6 +2,7 @@ body {
     overflow-y: scroll;
 }
 
+
 body::-webkit-scrollbar {
     display: none;
 }
@@ -63,3 +64,4 @@ body::-webkit-scrollbar {
     background-color: white;
     color: black;
 }
+
