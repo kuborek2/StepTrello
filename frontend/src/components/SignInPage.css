@@ -15,15 +15,11 @@ form > input {
     width: 20vw;
 }
 
-form > div {
+form > button {
     margin-top: 10px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
+    width: 8vw;
+    height: 5vh;
+    position: relative;
+    left: 50%;
+    transform: translate(-50%);
 }
-
-form > div > input, button {
-    width: 5vw;
-}
-
-

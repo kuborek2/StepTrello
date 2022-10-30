@@ -18,10 +18,12 @@ const FrontPage = () => {
                         Register today to see how smoothly your day can go.
                     </p>
                     <div className='buttonSpace'>
+                        <Link to="access/signin">
                         <button className="navButton">
                             Sign in
                         </button>
-                        <Link to="register">
+                        </Link>
+                        <Link to="access/register">
                             <button className="navButton">
                                 Register
                             </button>

@@ -9,13 +9,19 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import RegisterPage from './components/RegisterPage';
+import AccessPage from './components/AccessPage';
+import SignInPage from './components/SignInPage';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <BrowserRouter>
     <Routes>
       <Route path="/" element={<App />} />
-      <Route path="register" element={<RegisterPage />} />
+      <Route path="access" element={<AccessPage />}>
+        <Route path="register" element={<RegisterPage />}/>
+        <Route path="signin" element={<SignInPage />}/>
+
+      </Route>
     </Routes>
   </BrowserRouter>,
 );

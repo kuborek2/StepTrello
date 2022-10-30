@@ -8,7 +8,7 @@
     grid-template-columns: 45% 45%; */
     margin: auto;
     background-color: #C1FCF5;
-    height: fit-content;
+    height: 75px;
 }
 
 .layout > a {
@@ -22,4 +22,3 @@
     padding: 5px;
     color: white;
 }
-
