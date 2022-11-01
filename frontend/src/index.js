@@ -11,19 +11,27 @@ import reportWebVitals from './reportWebVitals';
 import RegisterPage from './components/RegisterPage';
 import AccessPage from './components/AccessPage';
 import SignInPage from './components/SignInPage';
+import { createStore } from 'redux'
+import { Provider } from 'react-redux'
+import reducersIndex from './store/reducersIndex';
+
+
+const store = createStore(reducersIndex);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <BrowserRouter>
-    <Routes>
-      <Route path="/" element={<App />} />
-      <Route path="access" element={<AccessPage />}>
-        <Route path="register" element={<RegisterPage />}/>
-        <Route path="signin" element={<SignInPage />}/>
+  <Provider store={store}>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<App />} />
+        <Route path="access" element={<AccessPage />}>
+          <Route path="register" element={<RegisterPage />}/>
+          <Route path="signin" element={<SignInPage />}/>
 
-      </Route>
-    </Routes>
-  </BrowserRouter>,
+        </Route>
+      </Routes>
+    </BrowserRouter>
+  </Provider>,
 );
 
 // If you want to start measuring performance in your app, pass a function

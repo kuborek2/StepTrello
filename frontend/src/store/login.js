@@ -1,8 +1,8 @@
-export default function counter(state = 0, action) {
+export default function login(state = false, action) {
     switch (action.type) {
-      case 'INCREMENT':
+      case 'CHECK':
         return state + 1
-      case 'DECREMENT':
+      case 'SET_TRUE':
         return state - 1
       default:
         return state

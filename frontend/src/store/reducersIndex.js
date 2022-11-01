@@ -1,8 +1,7 @@
 import { combineReducers } from 'redux'
-import todos from './todos'
-import counter from './counter'
+// import todos from './todos'
+import login from './login'
 
-// export default combineReducers({
-//   todos,
-//   counter
-// })
+export default combineReducers({
+  login
+})
