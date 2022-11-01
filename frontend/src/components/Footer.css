@@ -3,7 +3,7 @@
     padding: 0px;
     overflow: hidden;
     padding: 15px 30px 15px 30px;
-    width: 100%;
+    width: calc(100%-60px);
     display: grid;
     grid-template-columns: 45% 45%;
     margin: auto;

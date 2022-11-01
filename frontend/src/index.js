@@ -11,27 +11,26 @@ import reportWebVitals from './reportWebVitals';
 import RegisterPage from './components/RegisterPage';
 import AccessPage from './components/AccessPage';
 import SignInPage from './components/SignInPage';
-import { createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
-import thunk from 'redux-thunk'
-import reducersIndex from './store/reducersIndex';
+import store from './store/storeIndex';
+import DashboardPage from './components/DashboardPage';
 
-const store = createStore(reducersIndex, applyMiddleware(thunk))
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <Provider store={store}>
     <BrowserRouter>
+      <Provider store={store}>
       <Routes>
         <Route path="/" element={<App />} />
         <Route path="access" element={<AccessPage />}>
           <Route path="register" element={<RegisterPage />}/>
           <Route path="signin" element={<SignInPage />}/>
+          <Route path="dashboard" element={<DashboardPage />}/>
 
         </Route>
       </Routes>
-    </BrowserRouter>
-  </Provider>,
+      </Provider>
+    </BrowserRouter>,
 );
 
 // If you want to start measuring performance in your app, pass a function

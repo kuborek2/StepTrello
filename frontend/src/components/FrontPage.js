@@ -1,8 +1,41 @@
 import { Link } from "react-router-dom";
 import './FrontPage.css'
 import Footer from './Footer'
+import { useSelector } from "react-redux";
 
 const FrontPage = () => {
+
+    const login = useSelector(state => state.login)
+
+    const LoggedOutUserButtons = () => {
+        return (
+            <div className='buttonSpace'>
+                <Link to="access/signin">
+                <button className="navButton">
+                    Sign in
+                </button>
+                </Link>
+                <Link to="access/register">
+                    <button className="navButton">
+                        Register
+                    </button>
+                </Link>
+            </div>
+        );
+    }
+
+    const LoggedInUserButton = () => {
+        return (
+            <div className='buttonSpace'>
+                <Link to="access/dashboard">
+                    <button className="navButton">
+                        Go to Dashboard
+                    </button>
+                </Link>
+            </div>
+        );
+    }
+
     return (
         <div className="pageLayout">
             <div className="topElement">
@@ -17,18 +50,7 @@ const FrontPage = () => {
                         Not anymore.
                         Register today to see how smoothly your day can go.
                     </p>
-                    <div className='buttonSpace'>
-                        <Link to="access/signin">
-                        <button className="navButton">
-                            Sign in
-                        </button>
-                        </Link>
-                        <Link to="access/register">
-                            <button className="navButton">
-                                Register
-                            </button>
-                        </Link>
-                </div>
+                    { login.isUserLoggedIn ? <LoggedInUserButton/> : <LoggedOutUserButtons/> }
                 </article>
             </div>
             <Footer/>

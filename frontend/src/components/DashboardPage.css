@@ -1,0 +1,27 @@
+.container {
+
+}
+
+.toolbar {
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    background-color: #97DCEC;
+    border-style: solid;
+    border-color: white;
+    border-width: 3px 0px 3px 0px;
+    width: 100%;
+    height: 50px;
+}
+
+.dashboardBox {
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    width: 100%;
+    height: calc(100vh - 150px);
+    border: 20px solid #E3FFFB;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

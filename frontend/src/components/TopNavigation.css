@@ -1,18 +1,18 @@
 .layout {
     margin: 0px;
-    padding: 0px;
     overflow: hidden;
     padding: 0px 30px 0px 30px;
-    width: 100%;
-    /* display: grid;
-    grid-template-columns: 45% 45%; */
-    margin: auto;
+    width: calc(100%-60px);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
     background-color: #C1FCF5;
     height: 75px;
 }
 
 .layout > a {
     text-decoration: none;
+    width: fit-content;
 }
 
 .header {
@@ -21,4 +21,33 @@
     width: fit-content;
     padding: 5px;
     color: white;
+    text-align: center;
 }
+
+.userControlButtons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.userControlButtons > button {
+    margin: 15px;
+    width: 8vw;
+    height: 5vh;
+    min-width: fit-content;
+    min-height: fit-content;
+    background-color: #00C5B9;
+    color: white;
+    border: none;
+    border-radius: 10vw;
+}
+
+#userName {
+    background-color: #00c5b87c;
+}
+
+#logOutBtn:hover {
+    background-color: white;
+    color: black;
+}
+
