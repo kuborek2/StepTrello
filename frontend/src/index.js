@@ -11,12 +11,12 @@ import reportWebVitals from './reportWebVitals';
 import RegisterPage from './components/RegisterPage';
 import AccessPage from './components/AccessPage';
 import SignInPage from './components/SignInPage';
-import { createStore } from 'redux'
+import { createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
+import thunk from 'redux-thunk'
 import reducersIndex from './store/reducersIndex';
 
-
-const store = createStore(reducersIndex);
+const store = createStore(reducersIndex, applyMiddleware(thunk))
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

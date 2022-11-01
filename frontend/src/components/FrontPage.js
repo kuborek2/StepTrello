@@ -6,7 +6,7 @@ const FrontPage = () => {
     return (
         <div className="pageLayout">
             <div className="topElement">
-                <img src={"../resources/frontpage_logo_background.jpeg"}/>
+                <img src={"../resources/frontpage_logo_background.jpeg"} alt=""/>
                 <article>
                     <h1>StepTrello</h1>
                     <p>
