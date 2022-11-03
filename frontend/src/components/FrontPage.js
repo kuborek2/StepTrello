@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import './FrontPage.css'
-import Footer from './Footer'
+import Footer from './reusable/Footer'
 import { useSelector } from "react-redux";
 
 const FrontPage = () => {

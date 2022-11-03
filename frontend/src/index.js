@@ -9,11 +9,11 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import RegisterPage from './components/RegisterPage';
-import AccessPage from './components/AccessPage';
+import AccessPage from './components/reusable/AccessPage';
 import SignInPage from './components/SignInPage';
 import { Provider } from 'react-redux'
 import store from './store/storeIndex';
-import DashboardPage from './components/DashboardPage';
+import DashboardPage from './components/dashboard/DashboardPage';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

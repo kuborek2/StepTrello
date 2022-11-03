@@ -1,0 +1,15 @@
+#path {
+    width: 8vw;
+    height: 5vh;
+    min-width: fit-content;
+    min-height: fit-content;
+    background-color: white;
+    color: black;
+    border: none;
+    border-radius: 10vw;
+    display: flex;
+    align-items: center;
+    padding-left: 15px;
+    padding-right: 15px;;
+    font-size: 0.75em;
+}
