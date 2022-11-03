@@ -1,6 +1,7 @@
 #path {
     width: 8vw;
-    height: 5vh;
+    min-height: 3vh;
+    max-height: 4vh;
     min-width: fit-content;
     min-height: fit-content;
     background-color: white;

@@ -5,7 +5,6 @@ import PathElement from './PathElement';
 
 const BoardPath = ({props}) => {
 
-
     const board = useSelector(state => state.board)
 
     return (
