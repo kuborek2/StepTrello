@@ -18,6 +18,7 @@ import DashboardPage from './components/dashboard/DashboardPage';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
+    <React.StrictMode>
     <BrowserRouter>
       <Provider store={store}>
       <Routes>
@@ -30,7 +31,8 @@ root.render(
         </Route>
       </Routes>
       </Provider>
-    </BrowserRouter>,
+    </BrowserRouter>
+    </React.StrictMode>,
 );
 
 // If you want to start measuring performance in your app, pass a function

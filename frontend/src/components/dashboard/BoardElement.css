@@ -1,0 +1,31 @@
+.boardBox {
+    width: 13vw;
+    height: 13vw;
+    outline: 0.3rem solid black;
+    margin: 15px;
+    padding: 5px;
+    display: grid;
+    grid-template-rows: 20% 25% 1fr;
+}
+
+.tagsBox {
+    align-self: flex-end;
+}
+
+.boardBox > h3 {
+    background-color: #36D6C3;
+    border-bottom: 2px solid black;
+}
+
+.boardBox > * {
+    padding: 10px;
+    margin: 0px;
+}
+
+.boardBox > article {
+    background-color: #36D6C3;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: justify;
+}
+

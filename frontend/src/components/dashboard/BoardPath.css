@@ -3,7 +3,6 @@
     min-height: 3vh;
     max-height: 4vh;
     min-width: fit-content;
-    min-height: fit-content;
     background-color: white;
     color: black;
     border: none;
@@ -13,4 +12,10 @@
     padding-left: 15px;
     padding-right: 15px;;
     font-size: 0.75em;
+    margin: 5px;
+}
+
+#path > h4 {
+    margin: 0px;
+    line-height: 1em;
 }

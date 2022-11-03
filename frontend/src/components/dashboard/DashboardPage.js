@@ -1,8 +1,9 @@
 import './DashboardPage.css'
 import Toolbar from './Toolbar';
-import _ from 'lodash';
+import _, { result } from 'lodash';
 import Tags from '../../enums/Tags';
 import BoardElement from './BoardElement';
+
 
 const DashboardPage = () => {
 
@@ -33,19 +34,21 @@ const DashboardPage = () => {
                     let keys = Object.keys(elem);
                     if( keys.includes("name") && keys.includes("description") && keys.includes("tags") ){
                         return (
-                            <BoardElement elem={elem}/>
+                            <BoardElement element={elem} key={elem.name}/>
                         );
                     }
                 }
             })
+            return result;
         }
     }
 
     return (
+
         <div className='container'>
             <Toolbar />
             <div className='dashboardBox'>
-                Boards
+                <BoardsList list={initialList}/>
             </div>
 
         </div>
