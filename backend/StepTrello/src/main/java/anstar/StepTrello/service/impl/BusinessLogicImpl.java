@@ -18,7 +18,6 @@ public class BusinessLogicImpl implements BusinessLogic {
 
     @Override
     public Optional<UserDto> saveUser(UserDto userDto) {
-
         return null;
     }
 
@@ -33,7 +32,7 @@ public class BusinessLogicImpl implements BusinessLogic {
     }
 
     @Override
-    public BoardDto deleteBoard(BoardDto boardDto) {
+    public Boolean deleteBoard(BoardDto boardDto) {
         return null;
     }
 
@@ -43,17 +42,17 @@ public class BusinessLogicImpl implements BusinessLogic {
     }
 
     @Override
-    public BoardDto updateBoard(BoardDto boardDto) {
+    public Optional<BoardDto> updateBoard(String boardName , BoardDto boardDto) {
         return null;
     }
 
     @Override
-    public NoteDto addNote(NoteDto noteDto) {
+    public Optional<NoteDto> addNote(NoteDto noteDto) {
         return null;
     }
 
     @Override
-    public NoteDto deleteNote(NoteDto noteDto) {
+    public Boolean deleteNote(int noteId) {
         return null;
     }
 
@@ -63,17 +62,13 @@ public class BusinessLogicImpl implements BusinessLogic {
     }
 
     @Override
-    public NoteDto updateNote(NoteDto noteDto) {
+    public Optional<NoteDto> updateNote(NoteDto noteDto) {
         return null;
     }
 
     @Override
-    public Boolean addTag(String noteName, Tags tag) {
+    public Boolean updateTag(String boardName , Tags tag ) {
         return null;
     }
 
-    @Override
-    public Boolean deleteTag(String noteName, Tags tag) {
-        return null;
-    }
 }

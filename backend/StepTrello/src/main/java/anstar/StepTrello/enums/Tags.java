@@ -4,5 +4,6 @@ public enum Tags {
     RED,
     GREEN,
     YELLOW,
-    GREY
+    GREY,
+    NONE
 }

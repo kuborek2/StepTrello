@@ -16,23 +16,21 @@ public interface BusinessLogic {
 
     public Optional<BoardDto> addBoard(BoardDto boardDto);
 
-    public BoardDto deleteBoard(BoardDto boardDto);
+    public Boolean deleteBoard(BoardDto boardDto);
 
     public ArrayList<BoardDto> getBoards();
 
-    public BoardDto updateBoard(BoardDto boardDto);
+    public Optional<BoardDto> updateBoard( String boardName , BoardDto boardDto);
 
-    public NoteDto addNote(NoteDto noteDto);
+    public Optional<NoteDto> addNote(NoteDto noteDto);
 
-    public NoteDto deleteNote(NoteDto noteDto);
+    public Boolean deleteNote(int noteId);
 
     public ArrayList<NoteDto> getNotes();
 
-    public NoteDto updateNote(NoteDto noteDto);
+    public Optional<NoteDto> updateNote(NoteDto noteDto);
 
-    public Boolean addTag(String noteName, Tags tag);
-
-    public Boolean deleteTag(String noteName, Tags tag);
+    public Boolean updateTag(String boardName , Tags tag);
 
 
 }

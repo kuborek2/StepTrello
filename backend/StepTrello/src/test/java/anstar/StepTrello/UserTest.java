@@ -64,7 +64,9 @@ public class UserTest {
             "adam@gmail.com, adam, bomba1",
             "adamgmail.com, adam, bomba",
             ",adam,bb",
-            " , , "
+            " , , ",
+            ",,",
+
     })
 
     void canCreateNonValidUser(String email, String login, String password) {
