@@ -1,3 +1,13 @@
+a {
+    text-decoration: none;
+    color: black;
+}
+
+a:hover {
+    text-decoration: none;
+    color: black;
+}
+
 .boardBox {
     width: 13vw;
     height: 13vw;
@@ -5,16 +15,8 @@
     margin: 15px;
     padding: 5px;
     display: grid;
-    grid-template-rows: 20% 25% 1fr;
-}
-
-.tagsBox {
-    align-self: flex-end;
-}
-
-.boardBox > h3 {
-    background-color: #36D6C3;
-    border-bottom: 2px solid black;
+    grid-template-rows: 15% 25% 1fr;
+    overflow: hidden;
 }
 
 .boardBox > * {
@@ -22,10 +24,22 @@
     margin: 0px;
 }
 
+.tagsBox {
+    display: flex;
+    justify-content: flex-end;
+    padding: 0px;
+}
+
+.boardBox > h3 {
+    background-color: #36D6C3;
+    border-bottom: 2px solid black;
+}
+
 .boardBox > article {
     background-color: #36D6C3;
+    line-height: 1.5em;
     overflow: hidden;
     text-overflow: ellipsis;
-    text-align: justify;
+    -webkit-box-orient: vertical;
 }
 

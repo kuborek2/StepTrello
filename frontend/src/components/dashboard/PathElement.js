@@ -12,3 +12,9 @@ const PathElement = ({props, element, linkPath}) => {
 }
 
 export default PathElement;
+
+
+{/* <Link to={{
+            pathname: "/access/dashboard/board",
+            search: '?name=' + element.name,
+          }}></Link> */}
