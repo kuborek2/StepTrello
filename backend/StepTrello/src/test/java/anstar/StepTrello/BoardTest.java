@@ -10,6 +10,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import java.util.ArrayList;
+import java.util.EnumSet;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -118,11 +119,31 @@ public class BoardTest {
 
     void updateTag() {
         //given
-        // Napisz dane do boarda, potem zrób boarda, wywołaj update tag z nowym tagiem, i potem drugie funkcje z tagami co nie istniejągit st
+        // Napisz dane do boarda, potem zrób boarda, wywołaj update tag z nowym tagiem, i potem drugie funkcje z tagami co nie istnieją git st
+        String name = "My Board";
+        String owner = "Adam";
+        ArrayList<NoteDto> notesArrayList = new ArrayList<>();
+        ArrayList<UserDto> collaboratorsArrayList = new ArrayList<>();
+        Tags tagName = Tags.NONE;
+        BoardDto boardDto = new BoardDto(
+                name,
+                owner,
+                collaboratorsArrayList,
+                tagName
+        );
+
+        Tags newTag = Tags.GREEN;
+
+        // Za chuj nie wiem jak dac wartosc pusta enumowi wiec zostawie tak bez niczego xD
 
         //when
+        Optional<BoardDto> newBoard = businessLogicImpl.addBoard(boardDto);
+        Boolean result = businessLogicImpl.updateTag(name,newTag );
+
+        Boolean secondResult = businessLogicImpl.updateTag(name,newTag );
 
         //then
+        assertTrue(result);
     }
 
 }

@@ -5,5 +5,8 @@ public enum Tags {
     GREEN,
     YELLOW,
     GREY,
-    NONE
+    NONE,
+    ;
+
+
 }
