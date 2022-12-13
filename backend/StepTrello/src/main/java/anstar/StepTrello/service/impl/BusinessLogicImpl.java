@@ -6,26 +6,27 @@ import anstar.StepTrello.model.NoteDto;
 import anstar.StepTrello.model.UserDto;
 import anstar.StepTrello.repository.UserRepository;
 import anstar.StepTrello.service.BusinessLogic;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Optional;
 
+@Service
 public class BusinessLogicImpl implements BusinessLogic {
 
-    @Autowired
-    private UserRepository userRepository;
+    // User
+    @Override
+    public Optional<UserDto> saveUser(UserDto userDto) { return null; }
 
     @Override
-    public Optional<UserDto> saveUser(UserDto userDto) {
-        return null;
-    }
+    public UserDto getUser(String login) { return null; }
 
     @Override
     public Optional<UserDto> deleteUser(UserDto userDto) {
         return null;
     }
 
+    // Boards
     @Override
     public Optional<BoardDto> addBoard(BoardDto boardDto) {
         return null;
@@ -46,6 +47,7 @@ public class BusinessLogicImpl implements BusinessLogic {
         return null;
     }
 
+    // Notes
     @Override
     public Optional<NoteDto> addNote(NoteDto noteDto) {
         return null;
@@ -66,6 +68,7 @@ public class BusinessLogicImpl implements BusinessLogic {
         return null;
     }
 
+    // Tag
     @Override
     public Boolean updateTag(String boardName , Tags tag ) {
         return null;

@@ -12,6 +12,8 @@ public interface BusinessLogic {
 
     public Optional<UserDto> saveUser(UserDto userDto);
 
+    UserDto getUser(String login);
+
     public Optional<UserDto> deleteUser(UserDto userDto);
 
     public Optional<BoardDto> addBoard(BoardDto boardDto);
