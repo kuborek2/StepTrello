@@ -1,25 +1,37 @@
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import './BoardPath.css'
-import PathElement from './PathElement';
+import { setBoardName, getBoardName } from '../../store/boardSlice'
+import { Link } from "react-router-dom";
 
-const BoardPath = ({props}) => {
+const BoardPath = () => {
 
-    const board = useSelector(state => state.board.name)
+    const board = useSelector(state => state.board.boardName)
     const note = useSelector(state => state.note.name)
-    
+
+    const ResetPath = () => {
+        const dispatch = useDispatch()
+        dispatch(setBoardName(""))
+    }
+
+    console.log(board.constructor.name)
+    console.log(board)
 
     return (
-        <>
-        <button id="path">
-            <h4>
-                Path: &nbsp;
-                <PathElement element={"dashboard"} linkPath={"/access/dashboard"}/> &nbsp; 
-                / &nbsp;
-                { board !== "" ? <PathElement element={board} linkPath={"/access/dashboard/"+board}/> + '\t/' : "" } &nbsp;
-                { note !== "" ? <PathElement element={note} linkPath={"/access/dashboard/"+note}/> + '\t/' : "" } &nbsp;
-            </h4>
-        </button>
-        </>
+        <div id="path">
+            Path: &nbsp;
+            <Link to={"/access/dashboard"} onClick={() => ResetPath()}>
+                { "dashboard" }
+            </Link> &nbsp; 
+            / &nbsp;
+            { board !== "" && 
+                <Link to={"/access/dashboard/board?name="+board}>
+                    { board }
+                </Link> } &nbsp;
+            { note !== "" && 
+                <Link to={"/access/dashboard/board?name="+board+"/note?name="+note}>
+                    { note }
+                </Link> } &nbsp;
+        </div>
     );
 }
 

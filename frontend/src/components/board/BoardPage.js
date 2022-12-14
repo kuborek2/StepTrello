@@ -1,19 +1,13 @@
 import './BoardPage.css'
-import { useSearchParams } from 'react-router-dom';
-import { useSelector, useDispatch } from "react-redux";
-import { setBoardName } from '../../store/boardSlice'
+import { useSelector } from "react-redux";
 
 const BoardPage = () => {
 
-    const [searchParams, setSearchParams] = useSearchParams();
-    const name = searchParams.get("name")
-
-    const dispatch = useDispatch()
-    dispatch( setBoardName(name))
-
+    const board = useSelector(state => state.board.boardName)
+    
     return (
         <>
-            <h2>{ name }</h2>
+            <h2>{ board }</h2>
         </>
     );
 }

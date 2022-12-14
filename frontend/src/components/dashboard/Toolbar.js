@@ -1,5 +1,4 @@
 import './Toolbar.css'
-import { useState } from 'react';
 import BoardPath from './BoardPath';
 
 const Toolbar = () => {

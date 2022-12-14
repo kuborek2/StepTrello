@@ -1,13 +1,23 @@
 import './BoardElement.css'
 import Tag from './Tag';
 import { Link } from 'react-router-dom';
+import { useDispatch } from "react-redux";
+import { setBoardName } from '../../store/boardSlice'
 
 const BoardElement = ({element}) => {
+  
+    const dispatch = useDispatch()
+
+    const changeBoardSliceState = () => {
+        dispatch(setBoardName(element.name))
+    }
+
     return (
         <Link to={{
             pathname: "/access/dashboard/board",
             search: '?name=' + element.name,
-          }}>
+            }} 
+            onClick={() => changeBoardSliceState()}>
             <div className='boardBox'>
                 <div class="tagsBox">
                     <Tag/>

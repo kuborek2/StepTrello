@@ -11,7 +11,10 @@ a:hover {
 .boardBox {
     width: 13vw;
     height: 13vw;
-    outline: 0.3rem solid black;
+    outline: 0.15rem solid black;
+    background-color: #36D6C3;
+    border-radius: 1vw;
+    box-shadow: 5px 10px 5px #d4d4d4;
     margin: 15px;
     padding: 5px;
     display: grid;
@@ -32,7 +35,7 @@ a:hover {
 
 .boardBox > h3 {
     background-color: #36D6C3;
-    border-bottom: 2px solid black;
+    border-bottom: 0.15rem solid black;
 }
 
 .boardBox > article {

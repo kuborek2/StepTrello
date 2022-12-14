@@ -1,19 +1,22 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    name: "",
+    boardName: "",
 }
 
 const boardSlice = createSlice({
-    name: 'board',
+    name: 'name',
     initialState,
     reducers: {
         setBoardName: (state, action) => {
-            state.name = action.payload
+            state.boardName = action.payload
         },
+        getBoardName: (state) => {
+            return state.boardName;
+        }
     },
 });
 
-export const { setBoardName } = boardSlice.actions;
+export const { setBoardName, getBoardName } = boardSlice.actions;
 
 export default boardSlice.reducer;
