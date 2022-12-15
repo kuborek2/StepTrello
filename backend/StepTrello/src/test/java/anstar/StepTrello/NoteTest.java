@@ -2,6 +2,7 @@ package anstar.StepTrello;
 
 import anstar.StepTrello.model.NoteDto;
 import anstar.StepTrello.model.UserDto;
+import anstar.StepTrello.service.BusinessLogic;
 import anstar.StepTrello.service.impl.BusinessLogicImpl;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -14,7 +15,12 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class NoteTest {
-    final BusinessLogicImpl businessLogicImpl = new BusinessLogicImpl();
+    private final BusinessLogic businessLogic;
+
+
+    public NoteTest(BusinessLogic businessLogic) {
+        this.businessLogic = businessLogic;
+    }
 
     @Tag("Note")
     @ParameterizedTest
@@ -31,7 +37,7 @@ public class NoteTest {
         );
 
         //when
-        Optional<NoteDto> result = businessLogicImpl.addNote(noteDto);
+        Optional<NoteDto> result = businessLogic.addNote(noteDto);
 
         //then
         assertTrue(result.isPresent());
@@ -60,7 +66,7 @@ public class NoteTest {
         );
 
         //when
-        Optional<NoteDto> result = businessLogicImpl.addNote(noteDto);
+        Optional<NoteDto> result = businessLogic.addNote(noteDto);
 
         //then
         assertFalse(result.isPresent());
@@ -77,8 +83,8 @@ public class NoteTest {
         );
 
         //when
-        Optional<NoteDto> newNote = businessLogicImpl.addNote(noteDto);
-        Boolean result = businessLogicImpl.deleteNote(newNote.get().getNoteId());
+        Optional<NoteDto> newNote = businessLogic.addNote(noteDto);
+        Boolean result = businessLogic.deleteNote(newNote.get().getNoteId());
 
         //then
         assertTrue(result);
@@ -97,8 +103,8 @@ public class NoteTest {
             );
 
             //when
-            Optional<NoteDto> newNote = businessLogicImpl.addNote(noteDto);
-            Boolean result = businessLogicImpl.deleteNote(newNote.get().getNoteId());
+            Optional<NoteDto> newNote = businessLogic.addNote(noteDto);
+            Boolean result = businessLogic.deleteNote(newNote.get().getNoteId());
 
             //then
             assertFalse(result);
@@ -114,7 +120,7 @@ public class NoteTest {
                 noteContent
         );
         //when
-        Optional<NoteDto> result = businessLogicImpl.updateNote(noteDto);
+        Optional<NoteDto> result = businessLogic.updateNote(noteDto);
         //then
         assertTrue(result.isPresent());
         assertTrue(result.get().getNoteId() == noteId);
@@ -132,7 +138,7 @@ public class NoteTest {
                 noteContent
         );
         //when
-        Optional<NoteDto> result = businessLogicImpl.updateNote(noteDto);
+        Optional<NoteDto> result = businessLogic.updateNote(noteDto);
         //then
         assertFalse(result.isPresent());
         assertFalse(result.get().getNoteId() == noteId);

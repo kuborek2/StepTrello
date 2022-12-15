@@ -6,15 +6,20 @@ import anstar.StepTrello.model.NoteDto;
 import anstar.StepTrello.model.UserDto;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public interface BusinessLogic {
 
+    // public Optional<UserDto> saveUser(UserDto userDto);
+
     public Optional<UserDto> saveUser(UserDto userDto);
 
-    UserDto getUser(String login);
+    public Optional<UserDto> getUser(String login);
 
-    public Optional<UserDto> deleteUser(UserDto userDto);
+    public List <UserDto> getAllUsers() ;
+
+    public Optional<UserDto> deleteUser(String login);
 
     public Optional<BoardDto> addBoard(BoardDto boardDto);
 

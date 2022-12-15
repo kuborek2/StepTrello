@@ -1,18 +1,19 @@
 package anstar.StepTrello.controller;
 
-import anstar.StepTrello.model.BoardDto;
 import anstar.StepTrello.model.UserDto;
 import anstar.StepTrello.service.BusinessLogic;
-import anstar.StepTrello.service.impl.BusinessLogicImpl;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import anstar.StepTrello.service.impl.BusinessLogicImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
+
+import java.util.List;
 import java.util.Optional;
-import java.util.logging.Logger;
+
 
 @RestController
 @RequestMapping("/api")
@@ -20,41 +21,55 @@ public class UserController {
 
     private static final Logger LOGGER = (Logger) LoggerFactory.getLogger(BoardController.class);
 
-    private final BusinessLogicImpl businessLogic;
+    private final BusinessLogic businessLogic;
 
     @Autowired
-    public UserController(BusinessLogicImpl businessLogic) {
+    public UserController(BusinessLogic businessLogic) {
         this.businessLogic = businessLogic;
     }
 
+    // Done
     @CrossOrigin
     @PutMapping(value = "/user")
     public ResponseEntity <Optional<UserDto>> addUser(@RequestBody UserDto userDto) {
         LOGGER.info("Add user " + userDto.getLogin() );
-        Optional <UserDto> newUserDto = businessLogic.saveUser(userDto);
+        businessLogic.saveUser(userDto);
 
-        return new ResponseEntity<>(newUserDto,HttpStatus.CREATED);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
+    // Done
     @CrossOrigin
     @DeleteMapping(value = "/user/{userName}")
-    public ResponseEntity <Optional<UserDto> > deleteUser(@RequestBody UserDto userDto){
-        LOGGER.info("Delete this user" + userDto.getLogin() );
-        businessLogic.deleteUser(userDto);
+    public ResponseEntity <Optional<UserDto> > deleteUser(@PathVariable String userName){
+        LOGGER.info("Delete this user " + userName );
+        businessLogic.deleteUser(userName);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-
     @CrossOrigin
-    @GetMapping(value = "/user")
-    public ResponseEntity <UserDto>  getUser(String login) {
-        LOGGER.info("find this user" + login);
+    @GetMapping(value = "/user/")
+    public ResponseEntity <Optional<UserDto> >  getOneUser(@RequestParam(name = "login") String login) {
 
-        UserDto userDto =  businessLogic.getUser(login);
+        Optional <UserDto> userDto =  businessLogic.getUser(login);
 
-        return new ResponseEntity<>(userDto, HttpStatus.OK);
+        LOGGER.info("All users found: " + userDto);
+
+        return new ResponseEntity(userDto, HttpStatus.OK);
     }
+
+    // Done
+    @CrossOrigin
+    @GetMapping(value = "/users")
+    public ResponseEntity <List<UserDto>>  getUser() {
+        List<UserDto> userDto =  businessLogic.getAllUsers();
+
+        LOGGER.info("All users found: " + userDto);
+
+        return new ResponseEntity(userDto, HttpStatus.OK);
+    }
+
 
 
 }

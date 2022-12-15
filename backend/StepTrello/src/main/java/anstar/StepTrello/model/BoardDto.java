@@ -19,10 +19,12 @@ public class BoardDto {
     private ArrayList<UserDto> collaboratorsArrayList;
     private Tags tagName;
 
-    public BoardDto(String name, String ownerLogin, ArrayList<UserDto> collaboratorsArrayList, Tags tagName) {
+    public BoardDto(String name, String ownerLogin,  Tags tagName) {
         this.name = name;
         this.ownerLogin = ownerLogin;
-        this.collaboratorsArrayList = collaboratorsArrayList;
+
         this.tagName = tagName;
     }
+
+
 }

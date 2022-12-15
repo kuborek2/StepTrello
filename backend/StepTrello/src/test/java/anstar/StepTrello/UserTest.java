@@ -1,6 +1,7 @@
 package anstar.StepTrello;
 
 import anstar.StepTrello.model.UserDto;
+import anstar.StepTrello.service.BusinessLogic;
 import anstar.StepTrello.service.impl.BusinessLogicImpl;
 import org.junit.Test;
 import org.junit.jupiter.api.Tag;
@@ -14,8 +15,12 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class UserTest {
-    final BusinessLogicImpl businessLogicImpl = new BusinessLogicImpl();
+    private final BusinessLogic businessLogic;
 
+
+    public UserTest(BusinessLogic businessLogic) {
+        this.businessLogic = businessLogic;
+    }
     @Tag("User")
 
     /**
@@ -39,7 +44,7 @@ public class UserTest {
         );
 
         //when
-        Optional<UserDto> result = businessLogicImpl.saveUser(user);
+        Optional<UserDto> result = businessLogic.saveUser(user);
 
         //then
         assertTrue(result.isPresent());
@@ -79,7 +84,7 @@ public class UserTest {
         );
 
         //when
-        Optional<UserDto> result = businessLogicImpl.saveUser(user);
+        Optional<UserDto> result = businessLogic.saveUser(user);
 
         //then
         assertFalse(result.isPresent());
@@ -104,7 +109,7 @@ public class UserTest {
         );
 
         //when
-        Optional<UserDto> result = businessLogicImpl.deleteUser(user);
+        Optional<UserDto> result = businessLogic.deleteUser(user.getLogin());
 
         //then
         assertTrue(result.isPresent());
@@ -134,7 +139,7 @@ public class UserTest {
         );
 
         //when
-        Optional<UserDto> result = businessLogicImpl.deleteUser(user);
+        Optional<UserDto> result = businessLogic.deleteUser(user.getLogin());
 
         //then
         assertFalse(result.isPresent());

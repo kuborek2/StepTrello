@@ -4,10 +4,12 @@ import anstar.StepTrello.enums.Tags;
 import anstar.StepTrello.model.BoardDto;
 import anstar.StepTrello.model.NoteDto;
 import anstar.StepTrello.model.UserDto;
+import anstar.StepTrello.service.BusinessLogic;
 import anstar.StepTrello.service.impl.BusinessLogicImpl;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.EnumSet;
@@ -16,7 +18,12 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class BoardTest {
-    final BusinessLogicImpl businessLogicImpl = new BusinessLogicImpl();
+    private final BusinessLogic businessLogic;
+
+
+    public BoardTest(BusinessLogic businessLogic) {
+        this.businessLogic = businessLogic;
+    }
 
     @Tag("Board")
     @ParameterizedTest
@@ -32,12 +39,12 @@ public class BoardTest {
         BoardDto boardDto = new BoardDto(
                 name,
                 owner,
-                collaboratorsArrayList,
+//                collaboratorsArrayList,
                 tagName
         );
 
         //when
-        Optional<BoardDto> result = businessLogicImpl.addBoard(boardDto);
+        Optional<BoardDto> result = businessLogic.addBoard(boardDto);
 
         //then
         assertTrue(result.isPresent());
@@ -62,14 +69,14 @@ public class BoardTest {
         BoardDto boardDto = new BoardDto(
                 name,
                 owner,
-                collaboratorsArrayList,
+//                collaboratorsArrayList,
                 tagName
         );
 
 
         //when
-        Optional<BoardDto> newBoard = businessLogicImpl.addBoard(boardDto);
-        Boolean result = businessLogicImpl.deleteBoard(boardDto);
+        Optional<BoardDto> newBoard = businessLogic.addBoard(boardDto);
+        Boolean result = businessLogic.deleteBoard(boardDto);
         //then
         assertTrue(result);
 
@@ -91,20 +98,20 @@ public class BoardTest {
         BoardDto boardDto = new BoardDto(
                 name,
                 owner,
-                collaboratorsArrayList,
+//                collaboratorsArrayList,
                 tagName
         );
 
         BoardDto boardDto2 = new BoardDto(
                 name2,
                 owner2,
-                collaboratorsArrayList,
+//                collaboratorsArrayList,
                 tagName2
         );
 
         //when
-        Optional<BoardDto> newBoard = businessLogicImpl.addBoard(boardDto2);
-        Optional<BoardDto> result = businessLogicImpl.updateBoard(name ,boardDto);
+        Optional<BoardDto> newBoard = businessLogic.addBoard(boardDto2);
+        Optional<BoardDto> result = businessLogic.updateBoard(name ,boardDto);
 
         //then
         assertTrue(result.isPresent());
@@ -128,7 +135,7 @@ public class BoardTest {
         BoardDto boardDto = new BoardDto(
                 name,
                 owner,
-                collaboratorsArrayList,
+//                collaboratorsArrayList,
                 tagName
         );
 
@@ -137,10 +144,10 @@ public class BoardTest {
         // Za chuj nie wiem jak dac wartosc pusta enumowi wiec zostawie tak bez niczego xD
 
         //when
-        Optional<BoardDto> newBoard = businessLogicImpl.addBoard(boardDto);
-        Boolean result = businessLogicImpl.updateTag(name,newTag );
+        Optional<BoardDto> newBoard = businessLogic.addBoard(boardDto);
+        Boolean result = businessLogic.updateTag(name,newTag );
 
-        Boolean secondResult = businessLogicImpl.updateTag(name,newTag );
+        Boolean secondResult = businessLogic.updateTag(name,newTag );
 
         //then
         assertTrue(result);

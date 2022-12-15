@@ -3,8 +3,8 @@ package anstar.StepTrello.controller;
 
 import anstar.StepTrello.enums.Tags;
 import anstar.StepTrello.model.BoardDto;
-import anstar.StepTrello.model.NoteDto;
 import anstar.StepTrello.service.impl.BusinessLogicImpl;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,12 +13,13 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Optional;
-import java.util.logging.Logger;
+
 
 @RestController
 @RequestMapping("/api")
 public class BoardController {
     private static final Logger LOGGER = (Logger) LoggerFactory.getLogger(BoardController.class);
+//    private static final Logger LOGGER1 = LoggerFactory.getLogger(BoardController.class);
 
     private final BusinessLogicImpl businessLogic;
 
@@ -60,7 +61,7 @@ public class BoardController {
 
     //Update board
     @CrossOrigin
-    @PutMapping(value = "/board/{boardname}")
+    @PutMapping(value = "/board/{boardName}")
     public ResponseEntity<Optional<BoardDto>> updateBoard(@RequestBody BoardDto boardDto, @RequestParam String boardName) {
         LOGGER.info("Update this board " + boardName );
 

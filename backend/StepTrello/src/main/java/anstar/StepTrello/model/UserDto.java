@@ -1,21 +1,25 @@
 package anstar.StepTrello.model;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.springframework.stereotype.Component;
+
 
 
 
 @Getter
 @Setter
-@AllArgsConstructor
+@NoArgsConstructor
 @ToString
 @Component
 public class UserDto {
     private String login;
     private String email;
     private String password;
+
+    public UserDto(String login, String email, String password) {
+        this.login = login;
+        this.email = email;
+        this.password = password;
+    }
 }
