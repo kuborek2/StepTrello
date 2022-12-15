@@ -11,9 +11,6 @@ const boardSlice = createSlice({
         setBoardName: (state, action) => {
             state.boardName = action.payload
         },
-        getBoardName: (state) => {
-            return state.boardName;
-        }
     },
 });
 

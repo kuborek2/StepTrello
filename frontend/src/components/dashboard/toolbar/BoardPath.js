@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import './BoardPath.css'
-import { setBoardName, getBoardName } from '../../store/boardSlice'
+import { setBoardName } from '../../../store/boardSlice'
 import { Link } from "react-router-dom";
 
 const BoardPath = () => {

@@ -2,7 +2,7 @@ import './BoardElement.css'
 import Tag from './Tag';
 import { Link } from 'react-router-dom';
 import { useDispatch } from "react-redux";
-import { setBoardName } from '../../store/boardSlice'
+import { setBoardName } from '../../../store/boardSlice'
 
 const BoardElement = ({element}) => {
   

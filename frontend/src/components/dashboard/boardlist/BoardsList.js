@@ -1,8 +1,17 @@
 import _ from 'lodash';
-import Tags from '../../enums/Tags';
+import Tags from '../../../enums/Tags';
 import BoardElement from './BoardElement';
+import { useDispatch } from "react-redux";
+import { setBoardName } from '../../../store/boardSlice'
+import { useEffect } from 'react';
 
 const BoardsList = () => {
+
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(setBoardName(""))
+    })
 
     let initialList = [
         {
@@ -39,6 +48,7 @@ const BoardsList = () => {
             })
             return result;
         }
+        
     }
 
     return (

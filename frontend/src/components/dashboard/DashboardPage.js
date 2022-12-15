@@ -1,5 +1,5 @@
 import './DashboardPage.css'
-import Toolbar from './Toolbar';
+import Toolbar from './toolbar/Toolbar';
 import { Outlet } from 'react-router-dom';
 
 const DashboardPage = () => {

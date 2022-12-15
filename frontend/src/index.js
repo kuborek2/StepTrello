@@ -14,8 +14,9 @@ import SignInPage from './components/SignInPage';
 import { Provider } from 'react-redux'
 import store from './store/storeIndex';
 import DashboardPage from './components/dashboard/DashboardPage';
-import BoardPage from './components/board/BoardPage';
-import BoardsList from './components/dashboard/BoardsList';
+import BoardPage from './components/dashboard/board/BoardPage';
+import BoardsList from './components/dashboard/boardlist/BoardsList';
+import AddBoard from './components/dashboard/board/AddBoard';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -31,6 +32,8 @@ root.render(
           <Route path="dashboard" element={<DashboardPage />}>
             <Route path="" element={<BoardsList />}/>
             <Route path="board" element={<BoardPage />}/>
+            <Route path="add-board" element={<AddBoard/>}/>
+            
           </Route>
 
         </Route>
