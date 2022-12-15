@@ -1,5 +1,6 @@
 import './Toolbar.css'
 import BoardPath from './BoardPath';
+import { Link } from 'react-router-dom';
 
 const Toolbar = () => {
 
@@ -14,7 +15,9 @@ const Toolbar = () => {
                 <BoardPath />
             </span>
             <button>
-                Add board
+                <Link to={"/access/dashboard/add-board"}>
+                    Add board
+                </Link>
             </button>
         </div>
     );
