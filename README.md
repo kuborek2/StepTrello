@@ -11,8 +11,8 @@
 <br>
 
 __Skład zespołu:__
-Jakub Krężołek, 33513<br>
-Wojciech Jakliński, 33164<br>
+Jakub Krężołek<br>
+Wojciech Jakliński<br>
 ****
 <br>
 <br>
