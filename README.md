@@ -68,6 +68,6 @@ Tutaj możemy znaleść opis wstępny projektu w razie z założeniami:
 ****
 
 W pliku zmaieszczonym poniżej możemy znaleść pliki związane z dokumentacją API napisaną za pośrednictwem aplikacji SwaggerHUBw formie strony html:
-> [html-documentation-generated.zip](https://github.com/kuborek2/StepTrello/files/10208957/html-documentation-generated.zip)
+> https://app.swaggerhub.com/apis-docs/kuborek2/StepTrello/1.0.0
 
 
