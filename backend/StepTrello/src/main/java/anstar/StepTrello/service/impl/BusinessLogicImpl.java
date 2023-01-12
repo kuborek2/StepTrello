@@ -88,7 +88,7 @@ public class BusinessLogicImpl implements BusinessLogic {
 
         System.out.println(boardDto);
         Optional<Board> boardOptional = boardRepository.findBoardByBoardName(boardDto.getName());
-        if(boardOptional .isPresent()){
+        if(boardOptional.isPresent()){
             throw new IllegalStateException("Name of board taken");
         }
 
