@@ -31,9 +31,11 @@ public class NoteTest {
 
         String title = "CoolNote";
         String noteContent = "This is content of this note";
+        String boardName = "abc1";
         NoteDto noteDto = new NoteDto(
                 title,
-                noteContent
+                noteContent,
+                boardName
         );
 
         //when
@@ -57,12 +59,13 @@ public class NoteTest {
             ",,",
 
     })
-    void canCreateNonValidNote( String title, String noteContent) {
+    void canCreateNonValidNote( String title, String noteContent, String boardName) {
 
         //given
         NoteDto noteDto = new NoteDto(
                 title,
-                noteContent
+                noteContent,
+                boardName
         );
 
         //when
@@ -77,10 +80,12 @@ public class NoteTest {
         //given
         String title = "CoolNote";
         String noteContent = "This is content of this note";
+        String boardName = "abc1";
         NoteDto noteDto = new NoteDto(
                 title,
-                noteContent
-        );
+                noteContent,
+                boardName
+                );
 
         //when
         Optional<NoteDto> newNote = businessLogic.addNote(noteDto);
@@ -97,9 +102,11 @@ public class NoteTest {
             //given
             String title = "CoolNote";
             String noteContent = "This is content of this note";
+            String boardName = "abc1";
             NoteDto noteDto = new NoteDto(
                     title,
-                    noteContent
+                    noteContent,
+                    boardName
             );
 
             //when
@@ -111,13 +118,14 @@ public class NoteTest {
     }
 
     @ParameterizedTest
-    void canNoteBeUpdated(Integer noteId, String title, String noteContent) {
+    void canNoteBeUpdated(Integer noteId, String title, String noteContent, String boardName) {
 
         //given
         NoteDto noteDto = new NoteDto(
                 noteId,
                 title,
-                noteContent
+                noteContent,
+                boardName
         );
         //when
         Optional<NoteDto> result = businessLogic.updateNote(noteDto);
@@ -129,13 +137,14 @@ public class NoteTest {
 
     }
     @ParameterizedTest
-    void canNoteBeNotUpdated(Integer noteId, String title, String noteContent) {
+    void canNoteBeNotUpdated(Integer noteId, String title, String noteContent, String boardName) {
 
         //given
         NoteDto noteDto = new NoteDto(
                 noteId,
                 title,
-                noteContent
+                noteContent,
+                boardName
         );
         //when
         Optional<NoteDto> result = businessLogic.updateNote(noteDto);

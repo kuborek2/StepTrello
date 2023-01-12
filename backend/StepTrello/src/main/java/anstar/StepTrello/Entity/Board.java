@@ -2,10 +2,7 @@ package anstar.StepTrello.Entity;
 
 import lombok.Getter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Getter
@@ -18,6 +15,10 @@ public class Board implements Serializable {
 //    tag_name VARCHAR(6)
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "board_id")
+    private Integer boardId;
+
     @Column(name = "board_name")
     private String boardName;
 
@@ -28,6 +29,7 @@ public class Board implements Serializable {
     private String tagName;
 
     private Board(Board.Builder builder){
+        boardId = builder.board_id;
         boardName = builder.board_name;
         ownerLogin = builder.owner_login;
         tagName = builder.tag_name;
@@ -35,11 +37,17 @@ public class Board implements Serializable {
     public Board() {}
 
     public static final class Builder {
+        public Integer board_id;
         private String board_name;
         private String owner_login;
         private String tag_name;
 
         public Builder () {
+        }
+
+        public Board.Builder board_id(Integer board_id){
+            this.board_id = board_id;
+            return this;
         }
 
         public Board.Builder board_name(String board_name) {
@@ -56,6 +64,8 @@ public class Board implements Serializable {
             this.tag_name = tag_name;
             return this;
         }
+
+
 
         public Board build() {
             return new Board(this);

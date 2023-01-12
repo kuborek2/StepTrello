@@ -23,7 +23,7 @@ public interface BusinessLogic {
 
     public Optional<BoardDto> addBoard(BoardDto boardDto);
 
-    public Boolean deleteBoard(BoardDto boardDto);
+    public Boolean deleteBoard(String boardName);
 
     public ArrayList<BoardDto> getBoards();
 

@@ -26,6 +26,7 @@ public class BusinessLogicImpl implements BusinessLogic {
     private final Converter<User, UserDto> userDtoToUser;
     private final Converter<UserDto, User> userToUserDto;
     private final Converter<ArrayList<BoardDto>,ArrayList<Board>> boardToBoardDto;
+    private final Converter<Board,BoardDto> boardDtoToBoard;
 
 
     public BusinessLogicImpl(UserRepository userRepository,
@@ -33,14 +34,14 @@ public class BusinessLogicImpl implements BusinessLogic {
                              Converter<List<UserDto>, List<User>> userListMapper,
                              Converter<User, UserDto> userDtoToUser,
                              Converter<UserDto, User> userToUserDto,
-                             Converter<ArrayList<BoardDto>,ArrayList<Board>> boardToBoardDto) {
+                             Converter<ArrayList<BoardDto>, ArrayList<Board>> boardToBoardDto, Converter<Board, BoardDto> boardDtoToBoard) {
         this.userRepository = userRepository;
         this.boardRepository = boardRepository;
         this.userListMapper = userListMapper;
         this.userDtoToUser = userDtoToUser;
         this.userToUserDto = userToUserDto;
         this.boardToBoardDto = boardToBoardDto;
-
+        this.boardDtoToBoard = boardDtoToBoard;
     }
 
     // User
@@ -84,11 +85,27 @@ public class BusinessLogicImpl implements BusinessLogic {
     // Boards
     @Override
     public Optional<BoardDto> addBoard(BoardDto boardDto) {
-        return null;
+
+        System.out.println(boardDto);
+        Optional<Board> boardOptional = boardRepository.findBoardByBoardName(boardDto.getName());
+        if(boardOptional .isPresent()){
+            throw new IllegalStateException("Name of board taken");
+        }
+
+        boardRepository.save(boardDtoToBoard.convert(boardDto));
+
+
+        return  Optional.ofNullable(boardDto);
+
+
     }
 
     @Override
-    public Boolean deleteBoard(BoardDto boardDto) {
+    public Boolean deleteBoard(String boardName) {
+
+        boardRepository.deleteBoardByName(boardName);
+
+
         return null;
     }
 
@@ -101,8 +118,21 @@ public class BusinessLogicImpl implements BusinessLogic {
 
     @Override
     public Optional<BoardDto> updateBoard(String boardName , BoardDto boardDto) {
-        return null;
+        Board board = boardRepository.findOneByBoardName(boardName);
+
+        if(board != null){
+            Board boardBuilder = new Board.Builder()
+                    .board_name(boardName)
+                    .owner_login(boardDto.getOwnerLogin())
+                    .tag_name(String.valueOf(boardDto.getTagName()))
+                    .build();
+
+            boardRepository.save(boardBuilder);
+        }
+        return Optional.ofNullable(boardDto);
     }
+
+    //Dodaj liste notatek
 
     // Notes
     @Override

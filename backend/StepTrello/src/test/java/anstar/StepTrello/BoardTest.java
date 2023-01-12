@@ -7,6 +7,7 @@ import anstar.StepTrello.model.UserDto;
 import anstar.StepTrello.service.BusinessLogic;
 import anstar.StepTrello.service.impl.BusinessLogicImpl;
 import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,7 @@ public class BoardTest {
     }
 
     @Tag("Board")
-    @ParameterizedTest
+    @Test
     void canCreateBoard() {
 
         //given
@@ -56,7 +57,7 @@ public class BoardTest {
 
     }
 
-    @ParameterizedTest
+    @Test
     void canDeleteBoard(){
         String name = "My Board";
         String owner = "Adam";
@@ -76,13 +77,13 @@ public class BoardTest {
 
         //when
         Optional<BoardDto> newBoard = businessLogic.addBoard(boardDto);
-        Boolean result = businessLogic.deleteBoard(boardDto);
+        Boolean result = businessLogic.deleteBoard(boardDto.getName());
         //then
         assertTrue(result);
 
     }
 
-    @ParameterizedTest
+    @Test
     void updateBoard() {
         //given
         String name = "My Board";
@@ -122,11 +123,11 @@ public class BoardTest {
         assertTrue(result.get().getCollaboratorsArrayList().equals(collaboratorsArrayList));
     }
 
-    @ParameterizedTest
+    @Test
 
     void updateTag() {
         //given
-        // Napisz dane do boarda, potem zrób boarda, wywołaj update tag z nowym tagiem, i potem drugie funkcje z tagami co nie istnieją git st
+
         String name = "My Board";
         String owner = "Adam";
         ArrayList<NoteDto> notesArrayList = new ArrayList<>();
@@ -141,7 +142,7 @@ public class BoardTest {
 
         Tags newTag = Tags.GREEN;
 
-        // Za chuj nie wiem jak dac wartosc pusta enumowi wiec zostawie tak bez niczego xD
+
 
         //when
         Optional<BoardDto> newBoard = businessLogic.addBoard(boardDto);

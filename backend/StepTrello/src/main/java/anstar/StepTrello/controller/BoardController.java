@@ -42,9 +42,9 @@ public class BoardController {
     // Delete board
     @CrossOrigin
     @DeleteMapping(value = "/board/{boardName}")
-    public ResponseEntity<Boolean> deleteBoard(@RequestBody BoardDto boardDto) {
-        LOGGER.info("Delete this board " + boardDto.getName() );
-        businessLogic.deleteBoard(boardDto);
+    public ResponseEntity<Boolean> deleteBoard(@PathVariable String boardName) {
+        LOGGER.info("Delete this board " + boardName );
+        businessLogic.deleteBoard(boardName);
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
