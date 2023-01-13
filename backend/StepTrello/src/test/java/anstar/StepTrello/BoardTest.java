@@ -75,6 +75,106 @@ public class BoardTest {
         assertTrue(result.get().getCollaboratorsArrayList().equals(collaboratorsArrayList));
     }
 
+    @Test
+    void canDeleteBoard(){
+        String name = "My Board";
+        String owner = "Adam";
+        ArrayList<NoteDto> notesArrayList = new ArrayList<>();
+        ArrayList<UserDto> collaboratorsArrayList = new ArrayList<>();
+        Tags tagName = Tags.NONE;
+
+        BoardDto boardDto = new BoardDto(
+                name,
+                owner,
+                notesArrayList,
+                collaboratorsArrayList,
+                tagName
+        );
+
+        //when
+
+        Optional<BoardDto> newBoard = businessLogic.addBoard(boardDto);
+        businessLogic.deleteBoard(boardDto.getName());
+        Optional<Board> deletedBoard = boardRepository.findBoardByBoardName(boardDto.getName());
+
+        //then
+        assertTrue(deletedBoard.isEmpty());
+
+    }
+
+    @Test
+    void updateBoard() {
+        //given
+        String name = "My Board";
+        String owner = "Adam";
+        ArrayList<NoteDto> notesArrayList = new ArrayList<>();
+        ArrayList<UserDto> collaboratorsArrayList = new ArrayList<>();
+        Tags tagName = Tags.NONE;
+
+        String name2 = "My Board";
+        String owner2 = "Adam";
+        ArrayList<NoteDto> notesArrayList1 = new ArrayList<>();
+        ArrayList<UserDto> collaboratorsArrayList1 = new ArrayList<>();
+        Tags tagName2 = Tags.NONE;
+
+        BoardDto boardDto = new BoardDto(
+                name,
+                owner,
+                notesArrayList,
+                collaboratorsArrayList,
+                tagName
+        );
+
+        BoardDto boardDto2 = new BoardDto(
+                name2,
+                owner2,
+                notesArrayList1,
+                collaboratorsArrayList1,
+                tagName2
+        );
+
+        //when
+        Optional<BoardDto> newBoard = businessLogic.addBoard(boardDto2);
+        Optional<BoardDto> result = businessLogic.updateBoard(name ,boardDto);
+
+        //then
+        assertTrue(result.isPresent());
+        assertTrue(result.get().getName() == name);
+        assertTrue(result.get().getOwnerLogin() == owner);
+        assertTrue(result.get().getTagName() == tagName);
+        assertTrue(result.get().getNotesArrayList().equals(notesArrayList));
+        assertTrue(result.get().getCollaboratorsArrayList().equals(collaboratorsArrayList));
+    }
+
+    @Test
+
+    void updateTag() {
+        //given
+
+        String name = "My Board";
+        String owner = "Adam";
+        ArrayList<NoteDto> notesArrayList = new ArrayList<>();
+        ArrayList<UserDto> collaboratorsArrayList = new ArrayList<>();
+        Tags tagName = Tags.NONE;
+
+        BoardDto boardDto = new BoardDto(
+                name,
+                owner,
+                notesArrayList,
+                collaboratorsArrayList,
+                tagName
+        );
+
+        Tags newTag = Tags.GREEN;
+
+        //when
+        Optional<BoardDto> newBoard = businessLogic.addBoard(boardDto);
+        businessLogic.updateTag(name,newTag );
+        System.out.println(boardDto.getTagName());
+        //then
+        assertTrue(boardDto.getTagName() == newTag );
+    }
+
 //    public BoardTest(BusinessLogic businessLogic) {
 //        this.businessLogic = businessLogic;
 //    }
@@ -176,6 +276,7 @@ public class BoardTest {
 //        assertTrue(result.get().getNotesArrayList().equals(notesArrayList));
 //        assertTrue(result.get().getCollaboratorsArrayList().equals(collaboratorsArrayList));
 //    }
+//    Update Done
 //
 //    @Test
 //

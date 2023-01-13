@@ -1,12 +1,22 @@
 package anstar.StepTrello;
 
+import anstar.StepTrello.Entity.Board;
+import anstar.StepTrello.Entity.Note;
 import anstar.StepTrello.model.NoteDto;
 import anstar.StepTrello.model.UserDto;
+import anstar.StepTrello.repository.BoardRepository;
+import anstar.StepTrello.repository.NoteRepository;
 import anstar.StepTrello.service.BusinessLogic;
 import anstar.StepTrello.service.impl.BusinessLogicImpl;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
 import java.util.Optional;
@@ -14,16 +24,21 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@Slf4j
+@ExtendWith(MockitoExtension.class)
 public class NoteTest {
-    private final BusinessLogic businessLogic;
 
 
-    public NoteTest(BusinessLogic businessLogic) {
-        this.businessLogic = businessLogic;
-    }
+    @InjectMocks
+    BusinessLogicImpl businessLogic;
+
+    @Mock
+    NoteRepository noteRepository;
+
+
 
     @Tag("Note")
-    @ParameterizedTest
+    @Test
 
 
     void canCreateNote() {
@@ -31,11 +46,11 @@ public class NoteTest {
 
         String title = "CoolNote";
         String noteContent = "This is content of this note";
-        String boardName = "abc1";
+        Integer boardId = 1;
         NoteDto noteDto = new NoteDto(
                 title,
                 noteContent,
-                boardName
+                boardId
         );
 
         //when
@@ -59,13 +74,13 @@ public class NoteTest {
             ",,",
 
     })
-    void canCreateNonValidNote( String title, String noteContent, String boardName) {
+    void canCreateNonValidNote( String title, String noteContent, Integer boardId) {
 
         //given
         NoteDto noteDto = new NoteDto(
                 title,
                 noteContent,
-                boardName
+                boardId
         );
 
         //when
@@ -74,58 +89,60 @@ public class NoteTest {
         //then
         assertFalse(result.isPresent());
     }
-    @ParameterizedTest
+    @Test
     void canDeleteNote() {
 
         //given
         String title = "CoolNote";
         String noteContent = "This is content of this note";
-        String boardName = "abc1";
+        Integer boardId = 1;
         NoteDto noteDto = new NoteDto(
                 title,
                 noteContent,
-                boardName
-                );
+                boardId
+        );
 
         //when
         Optional<NoteDto> newNote = businessLogic.addNote(noteDto);
-        Boolean result = businessLogic.deleteNote(newNote.get().getNoteId());
+        businessLogic.deleteNote(newNote.get().getNoteId());
+        Optional<Note> deletedNote = noteRepository.findNoteByTitle(noteDto.getTitle());
 
         //then
-        assertTrue(result);
+        assertTrue(deletedNote.isEmpty());
 
 
     }
 
-    @ParameterizedTest
+    @Test
     void noteShouldNotBeDeleted() {
             //given
             String title = "CoolNote";
             String noteContent = "This is content of this note";
-            String boardName = "abc1";
+            Integer boardId = 1;
             NoteDto noteDto = new NoteDto(
                     title,
                     noteContent,
-                    boardName
+                    boardId
             );
 
             //when
             Optional<NoteDto> newNote = businessLogic.addNote(noteDto);
-            Boolean result = businessLogic.deleteNote(newNote.get().getNoteId());
+            businessLogic.deleteNote(newNote.get().getNoteId());
+            Optional<Note> deletedNote = noteRepository.findNoteByTitle(noteDto.getTitle());
 
             //then
-            assertFalse(result);
+            assertFalse(deletedNote.isEmpty());
     }
 
-    @ParameterizedTest
-    void canNoteBeUpdated(Integer noteId, String title, String noteContent, String boardName) {
+    @Test
+    void canNoteBeUpdated(Integer noteId, String title, String noteContent, Integer boardId) {
 
         //given
         NoteDto noteDto = new NoteDto(
                 noteId,
                 title,
                 noteContent,
-                boardName
+                boardId
         );
         //when
         Optional<NoteDto> result = businessLogic.updateNote(noteDto);
@@ -136,15 +153,15 @@ public class NoteTest {
         assertTrue(result.get().getNoteContent() == noteContent);
 
     }
-    @ParameterizedTest
-    void canNoteBeNotUpdated(Integer noteId, String title, String noteContent, String boardName) {
+    @Test
+    void canNoteBeNotUpdated(Integer noteId, String title, String noteContent, Integer boardId) {
 
         //given
         NoteDto noteDto = new NoteDto(
                 noteId,
                 title,
                 noteContent,
-                boardName
+                boardId
         );
         //when
         Optional<NoteDto> result = businessLogic.updateNote(noteDto);

@@ -12,17 +12,17 @@ import org.springframework.stereotype.Component;
 @Component
 public class NoteDto {
 
-    private int noteId;
+    private Integer noteId;
     private String title;
     private String noteContent;
-    private String boardName;
+    private Integer boardId;
 
 
-    public NoteDto(String title, String noteContent, String boardName) {
-        this.noteId = -1;
+    public NoteDto(String title, String noteContent, Integer boardId) {
+
         this.title = title;
         this.noteContent = noteContent;
-        this.boardName = boardName;
+        this.boardId = boardId;
     }
 
 

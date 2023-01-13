@@ -19,11 +19,11 @@ public interface BusinessLogic {
 
     public List <UserDto> getAllUsers() ;
 
-    public Optional<UserDto> deleteUser(String login);
+    public void deleteUser(String login);
 
     public Optional<BoardDto> addBoard(BoardDto boardDto);
 
-    public Boolean deleteBoard(String boardName);
+    public void deleteBoard(String boardName);
 
     public ArrayList<BoardDto> getBoards();
 
@@ -31,7 +31,7 @@ public interface BusinessLogic {
 
     public Optional<NoteDto> addNote(NoteDto noteDto);
 
-    public Boolean deleteNote(int noteId);
+    public void deleteNote(int noteId);
 
     public ArrayList<NoteDto> getNotes();
 

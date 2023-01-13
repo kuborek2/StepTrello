@@ -1,6 +1,7 @@
 package anstar.StepTrello.service.impl;
 
 import anstar.StepTrello.Entity.Board;
+import anstar.StepTrello.Entity.Note;
 import anstar.StepTrello.Entity.User;
 import anstar.StepTrello.enums.Tags;
 import anstar.StepTrello.mapper.Converter;
@@ -9,6 +10,7 @@ import anstar.StepTrello.model.NoteDto;
 import anstar.StepTrello.model.UserDto;
 
 import anstar.StepTrello.repository.BoardRepository;
+import anstar.StepTrello.repository.NoteRepository;
 import anstar.StepTrello.repository.UserRepository;
 import anstar.StepTrello.service.BusinessLogic;
 import org.springframework.stereotype.Service;
@@ -22,26 +24,38 @@ public class BusinessLogicImpl implements BusinessLogic {
 
     private final UserRepository userRepository;
     private final BoardRepository boardRepository;
+    private final NoteRepository noteRepository;
     private final Converter<List<UserDto>, List<User>> userListMapper;
     private final Converter<User, UserDto> userDtoToUser;
     private final Converter<UserDto, User> userToUserDto;
     private final Converter<ArrayList<BoardDto>,ArrayList<Board>> boardToBoardDto;
     private final Converter<Board,BoardDto> boardDtoToBoard;
+    private final Converter<NoteDto,Note> noteToNoteDto;
+    private final Converter<Note,NoteDto> noteDtoToNote;
+    private final Converter<ArrayList<NoteDto>, ArrayList<Note>> notesToNoteDto;
+
 
 
     public BusinessLogicImpl(UserRepository userRepository,
                              BoardRepository boardRepository,
-                             Converter<List<UserDto>, List<User>> userListMapper,
+                             NoteRepository noteRepository, Converter<List<UserDto>, List<User>> userListMapper,
                              Converter<User, UserDto> userDtoToUser,
                              Converter<UserDto, User> userToUserDto,
-                             Converter<ArrayList<BoardDto>, ArrayList<Board>> boardToBoardDto, Converter<Board, BoardDto> boardDtoToBoard) {
+                             Converter<ArrayList<BoardDto>, ArrayList<Board>> boardToBoardDto,
+                             Converter<Board, BoardDto> boardDtoToBoard,
+                             Converter<NoteDto, Note> noteToNoteDto, Converter<Note, NoteDto> noteDtoToNote,
+                             Converter<ArrayList<NoteDto>, ArrayList<Note>> notesToNoteDto) {
         this.userRepository = userRepository;
         this.boardRepository = boardRepository;
+        this.noteRepository = noteRepository;
         this.userListMapper = userListMapper;
         this.userDtoToUser = userDtoToUser;
         this.userToUserDto = userToUserDto;
         this.boardToBoardDto = boardToBoardDto;
         this.boardDtoToBoard = boardDtoToBoard;
+        this.noteToNoteDto = noteToNoteDto;
+        this.noteDtoToNote = noteDtoToNote;
+        this.notesToNoteDto = notesToNoteDto;
     }
 
     // User
@@ -75,11 +89,10 @@ public class BusinessLogicImpl implements BusinessLogic {
     }
 
     @Override
-    public Optional<UserDto> deleteUser(String login) {
+    public void deleteUser(String login) {
 
         userRepository.deleteUserByUsername(login);
 
-        return null;
     }
 
     // Boards
@@ -101,12 +114,11 @@ public class BusinessLogicImpl implements BusinessLogic {
     }
 
     @Override
-    public Boolean deleteBoard(String boardName) {
+    public void deleteBoard(String boardName) {
+
 
         boardRepository.deleteBoardByName(boardName);
 
-
-        return null;
     }
 
     @Override
@@ -137,17 +149,26 @@ public class BusinessLogicImpl implements BusinessLogic {
     // Notes
     @Override
     public Optional<NoteDto> addNote(NoteDto noteDto) {
-        return null;
+
+        System.out.println(noteDto);
+
+        noteRepository.save(noteDtoToNote.convert(noteDto));
+
+        return  Optional.ofNullable(noteDto);
     }
 
     @Override
-    public Boolean deleteNote(int noteId) {
-        return null;
+    public void deleteNote(int noteId) {
+
+        noteRepository.deleteNoteByNoteId(noteId);
     }
 
     @Override
     public ArrayList<NoteDto> getNotes() {
-        return null;
+
+        ArrayList<Note> notes = (ArrayList<Note>) noteRepository.findAll();
+        return notesToNoteDto.convert(notes);
+
     }
 
     @Override
