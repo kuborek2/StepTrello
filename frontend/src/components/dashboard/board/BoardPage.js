@@ -1,6 +1,6 @@
 import './BoardPage.css'
 import { useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { Outlet, useSearchParams } from 'react-router-dom';
 import { useSelector, useDispatch  } from 'react-redux';
 import { setBoardName } from '../../../store/boardSlice'
 
@@ -11,13 +11,13 @@ const BoardPage = () => {
     const [searchParams] = useSearchParams();
     useEffect(() => {
         if(!board){
-            dispatch(setBoardName(searchParams.get("name")))
+            dispatch(setBoardName([searchParams.get("name"), -1])) // TODO - update pagination to request data from backend if user enters thorugh link and update id
         }
     })
     
     return (
         <>
-            <h2>{ board }</h2>
+            <Outlet/>
         </>
     );
 }

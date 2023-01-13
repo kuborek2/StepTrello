@@ -17,6 +17,7 @@ import DashboardPage from './components/dashboard/DashboardPage';
 import BoardPage from './components/dashboard/board/BoardPage';
 import BoardsList from './components/dashboard/boardlist/BoardsList';
 import AddBoard from './components/dashboard/board/AddBoard';
+import NotesList from './components/dashboard/board/note/NotesList';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -31,7 +32,9 @@ root.render(
           <Route path="signin" element={<SignInPage />}/>
           <Route path="dashboard" element={<DashboardPage />}>
             <Route path="" element={<BoardsList />}/>
-            <Route path="board" element={<BoardPage />}/>
+            <Route path="board" element={<BoardPage />}>
+              <Route path="" element={<NotesList />}/>
+            </Route>
             <Route path="add-board" element={<AddBoard/>}/>
             
           </Route>

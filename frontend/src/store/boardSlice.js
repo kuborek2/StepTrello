@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     boardName: "",
+    boardId: -1,
 }
 
 const boardSlice = createSlice({
@@ -9,7 +10,7 @@ const boardSlice = createSlice({
     initialState,
     reducers: {
         setBoardName: (state, action) => {
-            state.boardName = action.payload
+            [ state.boardName, state.boardId ] = action.payload
         },
     },
 });

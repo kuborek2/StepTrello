@@ -9,7 +9,7 @@ const BoardElement = ({element}) => {
     const dispatch = useDispatch()
 
     const changeBoardSliceState = () => {
-        dispatch(setBoardName(element.name))
+        dispatch(setBoardName([element.name, element.board_id]))
     }
 
     return (
@@ -19,7 +19,7 @@ const BoardElement = ({element}) => {
             }} 
             onClick={() => changeBoardSliceState()}>
             <div className='boardBox'>
-                <div class="tagsBox">
+                <div className='tagsBox'>
                     <Tag/>
                 </div>
                 <h3>

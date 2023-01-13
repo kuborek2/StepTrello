@@ -10,11 +10,8 @@ const BoardPath = () => {
 
     const ResetPath = () => {
         const dispatch = useDispatch()
-        dispatch(setBoardName(""))
+        dispatch(setBoardName(["",-1]))
     }
-
-    console.log(board.constructor.name)
-    console.log(board)
 
     return (
         <div id="path">

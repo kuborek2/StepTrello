@@ -10,21 +10,24 @@ const BoardsList = () => {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(setBoardName(""))
+        dispatch(setBoardName(["",-1]))
     })
 
     let initialList = [
         {
+            board_id: 1,
             name: 'board1',
             description: "A description of board1",
             tags: [Tags.GREEN, Tags.YELLOW]
         },
         {
+            board_id: 2,
             name: 'board2',
             description: "A description of board2, A description of board2, A description of board2, A description of board2, end of board2 description",
             tags: [Tags.RED]
         },
         {
+            board_id: 3,
             name: 'board3',
             description: "A description of board3",
             tags: [Tags.GREEN]
@@ -38,9 +41,9 @@ const BoardsList = () => {
             let result = list.map((elem) => {
                 if ( _.isObject(elem) ){
                     let keys = Object.keys(elem);
-                    if( keys.includes("name") && keys.includes("description") && keys.includes("tags") ){
+                    if( keys.includes("name") && keys.includes("description") && keys.includes("tags") && keys.includes("board_id") ){
                         return (
-                            <BoardElement element={elem} key={elem.name}/>
+                            <BoardElement element={elem} key={elem.board_id}/>
                         );
                     }
                 }

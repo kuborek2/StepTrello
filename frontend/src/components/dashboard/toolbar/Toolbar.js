@@ -1,11 +1,19 @@
+
 import './Toolbar.css'
+import { useSelector } from 'react-redux';
 import BoardPath from './BoardPath';
 import { Link } from 'react-router-dom';
 
 const Toolbar = () => {
 
+    const board = useSelector(state => state.board.boardName)
+    const note = useSelector(state => state.note.name)
+
     return (
         <div className='toolbar'>
+            <h3 className='subpage_title'>
+                { note !== "" ? note : board !== "" ? board : "Dashboard"}
+            </h3>
             <span>
                 <span>
                     <label name="search" id="search">Search: </label>

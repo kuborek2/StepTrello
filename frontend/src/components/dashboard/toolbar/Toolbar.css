@@ -39,3 +39,11 @@
 .toolbar > span > span {
     width: 25vw;
 }
+
+.subpage_title {
+    display: block;
+    width: 250px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
