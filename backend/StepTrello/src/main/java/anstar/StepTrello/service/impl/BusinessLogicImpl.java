@@ -144,8 +144,6 @@ public class BusinessLogicImpl implements BusinessLogic {
         return Optional.ofNullable(boardDto);
     }
 
-    //Dodaj liste notatek
-
     // Notes
     @Override
     public Optional<NoteDto> addNote(NoteDto noteDto) {
@@ -173,13 +171,35 @@ public class BusinessLogicImpl implements BusinessLogic {
 
     @Override
     public Optional<NoteDto> updateNote(NoteDto noteDto) {
-        return null;
+        Note note = noteRepository.findNoteByNoteId(noteDto.getNoteId());
+        if(note != null){
+            Note noteBuilder = new Note.Builder()
+                    .title(noteDto.getTitle())
+                    .description(noteDto.getNoteContent())
+                    .board_id(noteDto.getBoardId())
+                    .build();
+            noteRepository.save(noteBuilder);
+        }
+        return Optional.ofNullable(noteDto);
     }
 
     // Tag
     @Override
-    public Boolean updateTag(String boardName , Tags tag ) {
-        return null;
+    public Boolean updateTag( String boardName , Tags tag ) {
+        Board board = boardRepository.findOneByBoardName(boardName);
+
+        if(board != null){
+            Board boardBuilder = new Board.Builder()
+                    .board_name(boardName)
+                    .owner_login(board.getOwnerLogin())
+                    .tag_name(String.valueOf(tag))
+                    .build();
+
+            boardRepository.save(boardBuilder);
+            return true;
+        }else{
+            return false;
+        }
     }
 
 }

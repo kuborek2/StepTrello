@@ -22,5 +22,8 @@ public interface NoteRepository extends JpaRepository<Note,String>, CrudReposito
 
     @Query(value = "SELECT title FROM Note where title like :title")
     Optional<Note> findNoteByTitle(@Param("title" ) String title );
+
+    @Query(value = "")
+    Note findNoteByNoteId(Integer noteId);
 }
 
