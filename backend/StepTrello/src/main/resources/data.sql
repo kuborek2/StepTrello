@@ -12,7 +12,7 @@ CREATE TABLE users (
 INSERT INTO users VALUES ('adam4','adam1@vp.pl','adam1234');
 
 CREATE TABLE board (
-    board_id INTEGER GENERATED ALWAYS AS IDENTITY  PRIMARY KEY  ,
+    board_id INTEGER GENERATED ALWAYS AS IDENTITY  PRIMARY KEY  UNIQUE ,
     board_name VARCHAR(30) ,
     owner_login VARCHAR(25),
     collaborators_list VARCHAR ARRAY,
@@ -28,7 +28,7 @@ INSERT INTO board (board_name,owner_login,tag_name) VALUES   ('tablica5','adam1'
 
 
 CREATE TABLE note (
-                       note_id INTEGER PRIMARY KEY NOT NULL ,
+                       note_id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY NOT NULL UNIQUE,
                        title VARCHAR(25) NOT NULL ,
                        description VARCHAR(300),
                        board_id INTEGER NOT NULL ,

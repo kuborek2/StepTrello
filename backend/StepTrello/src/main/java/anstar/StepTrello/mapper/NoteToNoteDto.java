@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 public class NoteToNoteDto implements Converter<NoteDto, Note>{
     @Override
     public NoteDto convert(Note note) {
-        return new NoteDto(note.getTitle(),note.getDescription(),note.getBoardId());
+        return new NoteDto(note.getNoteId(),note.getTitle(),note.getDescription(),note.getBoardId());
     }
 }
 

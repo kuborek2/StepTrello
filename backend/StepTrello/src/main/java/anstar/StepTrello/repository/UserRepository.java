@@ -17,12 +17,15 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<User, String>, CrudRepository<User,String> {
 
 // , nativeQuery = true
-    @Query(value = "SELECT us.username FROM User us WHERE us.username = :search_login " )
-    User findUserByLogin(@Param("search_login") String login);
+//    @Query(value = "SELECT us.username FROM User us WHERE us.username like %:search_login% " )
+//    User findUserByLogin(@Param("search_login") String login);
 //    us WHERE us.username LIKE %:search_login%
+    @Query
+    User findUserByUsername(String userName);
 
-    @Query(value = "SELECT username FROM User where username like :login")
-    Optional<User> findUserByUsername(@Param("login" ) String login );
+
+//    @Query(value = "SELECT username FROM User where username like :login")
+//    User findUserByUsername(@Param("login" ) String login );
 
     @Modifying
     @Query(value = "DELETE FROM User us where us.username = :login")

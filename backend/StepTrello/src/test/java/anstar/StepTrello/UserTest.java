@@ -120,7 +120,7 @@ public class UserTest {
 
         //when
         businessLogic.deleteUser(user.getLogin());
-        Optional<User> deletedUser1 = userRepository.findUserByUsername(user.getLogin());
+        Optional<User> deletedUser1 = Optional.ofNullable(userRepository.findUserByUsername(user.getLogin()));
 
         //then
         assertTrue(deletedUser1.isEmpty());
@@ -139,7 +139,7 @@ public class UserTest {
 
         //when
         businessLogic.deleteUser(user.getLogin());
-        Optional<User> deletedUser1 = userRepository.findUserByUsername(user.getLogin());
+        Optional<User> deletedUser1 = Optional.ofNullable(userRepository.findUserByUsername(user.getLogin()));
 
         //then
         assertFalse(deletedUser1.isEmpty());

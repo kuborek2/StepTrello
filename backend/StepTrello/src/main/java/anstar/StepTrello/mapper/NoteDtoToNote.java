@@ -11,6 +11,7 @@ public class NoteDtoToNote implements Converter<Note,NoteDto> {
     @Override
     public Note convert(NoteDto noteDto){
         return new Note.Builder()
+                .note_id(noteDto.getNoteId())
                 .title(noteDto.getTitle())
                 .description(noteDto.getNoteContent())
                 .board_id(noteDto.getBoardId())

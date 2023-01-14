@@ -13,12 +13,15 @@ import anstar.StepTrello.repository.BoardRepository;
 import anstar.StepTrello.repository.NoteRepository;
 import anstar.StepTrello.repository.UserRepository;
 import anstar.StepTrello.service.BusinessLogic;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 public class BusinessLogicImpl implements BusinessLogic {
 
@@ -61,8 +64,9 @@ public class BusinessLogicImpl implements BusinessLogic {
     // User
     @Override
     public Optional<UserDto> saveUser(UserDto userDto) {
+
         System.out.println(userDto);
-        Optional<User> userOptional = userRepository.findUserByUsername(userDto.getLogin());
+        Optional<User> userOptional = Optional.ofNullable(userRepository.findUserByUsername(userDto.getLogin()));
         if(userOptional.isPresent()){
             throw new IllegalStateException("Login taken");
         }
@@ -72,11 +76,11 @@ public class BusinessLogicImpl implements BusinessLogic {
         return  Optional.ofNullable(userDto);
     }
 
+
     @Override
     public Optional<UserDto> getUser(String login) {
-        Optional <UserDto> userDto = Optional.ofNullable(userToUserDto.convert(userRepository.findUserByLogin(login)));
-        //  List<User> user = userRepository.findAll();
-        return userDto;
+        log.info(login);
+        return Optional.ofNullable(userToUserDto.convert(userRepository.findUserByUsername(login)));
 
     }
 
@@ -115,10 +119,7 @@ public class BusinessLogicImpl implements BusinessLogic {
 
     @Override
     public void deleteBoard(String boardName) {
-
-
         boardRepository.deleteBoardByName(boardName);
-
     }
 
     @Override
@@ -129,12 +130,14 @@ public class BusinessLogicImpl implements BusinessLogic {
     }
 
     @Override
-    public Optional<BoardDto> updateBoard(String boardName , BoardDto boardDto) {
-        Board board = boardRepository.findOneByBoardName(boardName);
+    public Optional<BoardDto> updateBoard(Integer boardId , BoardDto boardDto) {
+        Board board = boardRepository.findBoardByBoardId(boardId);
 
         if(board != null){
+
             Board boardBuilder = new Board.Builder()
-                    .board_name(boardName)
+                    .board_id(boardId)
+                    .board_name(boardDto.getName())
                     .owner_login(boardDto.getOwnerLogin())
                     .tag_name(String.valueOf(boardDto.getTagName()))
                     .build();
@@ -174,6 +177,7 @@ public class BusinessLogicImpl implements BusinessLogic {
         Note note = noteRepository.findNoteByNoteId(noteDto.getNoteId());
         if(note != null){
             Note noteBuilder = new Note.Builder()
+                    .note_id(note.getNoteId())
                     .title(noteDto.getTitle())
                     .description(noteDto.getNoteContent())
                     .board_id(noteDto.getBoardId())
@@ -185,14 +189,15 @@ public class BusinessLogicImpl implements BusinessLogic {
 
     // Tag
     @Override
-    public Boolean updateTag( String boardName , Tags tag ) {
-        Board board = boardRepository.findOneByBoardName(boardName);
+    public Boolean updateTag( Integer boardId , String tag ) {
+        Board board = boardRepository.findBoardByBoardId(boardId);
 
         if(board != null){
             Board boardBuilder = new Board.Builder()
-                    .board_name(boardName)
+                    .board_id(board.getBoardId())
+                    .board_name(board.getBoardName())
                     .owner_login(board.getOwnerLogin())
-                    .tag_name(String.valueOf(tag))
+                    .tag_name(tag)
                     .build();
 
             boardRepository.save(boardBuilder);

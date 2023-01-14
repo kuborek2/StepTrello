@@ -105,11 +105,13 @@ public class BoardTest {
     @Test
     void updateBoard() {
         //given
+        Integer boardId= 1;
         String name = "My Board";
         String owner = "Adam";
         ArrayList<NoteDto> notesArrayList = new ArrayList<>();
         ArrayList<UserDto> collaboratorsArrayList = new ArrayList<>();
         Tags tagName = Tags.NONE;
+
 
         String name2 = "My Board";
         String owner2 = "Adam";
@@ -135,7 +137,7 @@ public class BoardTest {
 
         //when
         Optional<BoardDto> newBoard = businessLogic.addBoard(boardDto2);
-        Optional<BoardDto> result = businessLogic.updateBoard(name ,boardDto);
+        Optional<BoardDto> result = businessLogic.updateBoard(boardId ,boardDto);
 
         //then
         assertTrue(result.isPresent());
@@ -150,7 +152,7 @@ public class BoardTest {
 
     void updateTag() {
         //given
-
+        Integer boardId = 1;
         String name = "My Board";
         String owner = "Adam";
         ArrayList<NoteDto> notesArrayList = new ArrayList<>();
@@ -165,14 +167,14 @@ public class BoardTest {
                 tagName
         );
 
-        Tags newTag = Tags.GREEN;
+        String newTag = "YELLOW";
 
         //when
         Optional<BoardDto> newBoard = businessLogic.addBoard(boardDto);
-        businessLogic.updateTag(name,newTag );
+        businessLogic.updateTag(boardId,newTag );
         System.out.println(boardDto.getTagName());
         //then
-        assertTrue(boardDto.getTagName() == newTag );
+        assertTrue(boardDto.getTagName().toString() == newTag );
     }
 
 //    public BoardTest(BusinessLogic businessLogic) {

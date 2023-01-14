@@ -16,7 +16,7 @@ public class NotesToNoteDto implements Converter<ArrayList<NoteDto>, ArrayList<N
     @Override
     public ArrayList<NoteDto> convert(ArrayList<Note> notes){
         return notes.stream()
-                .map(note -> new NoteDto(note.getTitle(),note.getDescription(),note.getBoardId())).collect(Collectors.toCollection(ArrayList::new));
+                .map(note -> new NoteDto(note.getNoteId(),note.getTitle(),note.getDescription(),note.getBoardId())).collect(Collectors.toCollection(ArrayList::new));
     }
 }
 

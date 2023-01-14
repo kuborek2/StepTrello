@@ -24,6 +24,8 @@ public interface BoardRepository extends JpaRepository<Board, String>, CrudRepos
     @Query(value = "SELECT boardName FROM Board where boardName like :boardname")
     Optional<Board> findBoardByBoardName(@Param("boardname" ) String boardname );
 
+    Board findBoardByBoardId(Integer boardId);
+
     Board findOneByBoardName(String boardName);
 
 }

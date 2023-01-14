@@ -21,7 +21,7 @@ public class Note {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "board_name")
+    @Column(name = "board_id")
     private Integer boardId;
 
     private Note(Note.Builder builder){

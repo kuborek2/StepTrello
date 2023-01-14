@@ -27,7 +27,7 @@ public interface BusinessLogic {
 
     public ArrayList<BoardDto> getBoards();
 
-    public Optional<BoardDto> updateBoard( String boardName , BoardDto boardDto);
+    public Optional<BoardDto> updateBoard(Integer boardId , BoardDto boardDto);
 
     public Optional<NoteDto> addNote(NoteDto noteDto);
 
@@ -37,7 +37,7 @@ public interface BusinessLogic {
 
     public Optional<NoteDto> updateNote(NoteDto noteDto);
 
-    public Boolean updateTag(String boardName , Tags tag);
+    public Boolean updateTag(Integer boardId , String tag);
 
 
 }
