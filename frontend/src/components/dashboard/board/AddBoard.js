@@ -2,10 +2,12 @@ import './AddBoard.css'
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
 import { useState } from 'react';
+import Tags from '../../../enums/Tags';
 
 const AddBoard = () => {
 
   const [selectedOptions, setSelectedOptions] = useState([]);
+  const [selectedTag, setSelectedTag] = useState("");
 
   const top100Films = [
     { title: 'The Shawshank Redemption', year: 1994 },
@@ -17,6 +19,10 @@ const AddBoard = () => {
     { title: 'Pulp Fiction', year: 1994 }
   ]
 
+  const SubmitAddBoardForm = () => {
+    // TODO : Add element to the boardSlice list of boards. Call backend request to add board and move to the board page
+  }
+
   return (
     <div className='addFormBox'>
       <form>
@@ -27,7 +33,7 @@ const AddBoard = () => {
         <Autocomplete
           disableClearable
           multiple
-          id="multiple-limit-tags"
+          id="multiple-limit-collabolators"
           onChange={(event, newValue) => {
             setSelectedOptions(newValue);
           }}
@@ -38,19 +44,28 @@ const AddBoard = () => {
             <TextField {...params} variant="standard" sc={{ paddingLeft: '5vw' }} />
           )}
           sx={{ width: '20vw', marginBottom: '10px' }}
+        /><br/>
+
+        <label for="cemail">Tag: </label><br/>
+        <Autocomplete
+          disableClearable
+          id="tag"
+          onChange={(event, newValue) => {
+            setSelectedTag(newValue);
+          }}
+          isOptionEqualToValue={(option, value) => option === value}
+          options={Object.values(Tags)}
+          getOptionLabel={(option) => option}
+          renderInput={(params) => (
+            <TextField {...params} variant="standard" sc={{ paddingLeft: '5vw' }} />
+          )}
+          sx={{ width: '20vw', marginBottom: '10px' }}
         />
 
-        <label for="password">Password:</label><br/>
-        <input type="password" id="password" name="password"/><br/>
-
-        <label for="cpassword">Confirm password:</label><br/>
-        <input type="password" id="cpassword" name="cpassword"/><br/>
-
         <div>
-          <button>
+          <button onClick={() => SubmitAddBoardForm}>
             Submit
           </button>
-          <input type="reset" value="Reset"/>
         </div>
       </form>
     </div>

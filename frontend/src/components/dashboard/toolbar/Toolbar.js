@@ -23,9 +23,14 @@ const Toolbar = () => {
                 <BoardPath />
             </span>
             <button>
+                { board !== "" && 
+                <Link to={"/access/dashboard/add-board"}>
+                    Add Note
+                </Link> }
+                { board === "" &&
                 <Link to={"/access/dashboard/add-board"}>
                     Add board
-                </Link>
+                </Link> }
             </button>
         </div>
     );
