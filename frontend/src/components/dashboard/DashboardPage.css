@@ -1,0 +1,21 @@
+.container {
+    margin: 0px;
+    padding: 0px;
+}
+
+.dashboardBox {
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    width: 100%;
+    min-height: calc(100vh - 150px + 1.5rem);
+    border: 20px solid #E3FFFB;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 1vw;
+}

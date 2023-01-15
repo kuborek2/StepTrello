@@ -9,21 +9,41 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import RegisterPage from './components/RegisterPage';
-import AccessPage from './components/AccessPage';
+import AccessPage from './components/reusable/AccessPage';
 import SignInPage from './components/SignInPage';
+import { Provider } from 'react-redux'
+import store from './store/storeIndex';
+import DashboardPage from './components/dashboard/DashboardPage';
+import BoardPage from './components/dashboard/board/BoardPage';
+import BoardsList from './components/dashboard/boardlist/BoardsList';
+import AddBoard from './components/dashboard/board/AddBoard';
+import NotesList from './components/dashboard/board/note/NotesList';
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <BrowserRouter>
-    <Routes>
-      <Route path="/" element={<App />} />
-      <Route path="access" element={<AccessPage />}>
-        <Route path="register" element={<RegisterPage />}/>
-        <Route path="signin" element={<SignInPage />}/>
+    <React.StrictMode>
+    <BrowserRouter>
+      <Provider store={store}>
+      <Routes>
+        <Route path="/" element={<App />} />
+        <Route path="access" element={<AccessPage />}>
+          <Route path="register" element={<RegisterPage />}/>
+          <Route path="signin" element={<SignInPage />}/>
+          <Route path="dashboard" element={<DashboardPage />}>
+            <Route path="" element={<BoardsList />}/>
+            <Route path="board" element={<BoardPage />}>
+              <Route path="" element={<NotesList />}/>
+            </Route>
+            <Route path="add-board" element={<AddBoard/>}/>
+            
+          </Route>
 
-      </Route>
-    </Routes>
-  </BrowserRouter>,
+        </Route>
+      </Routes>
+      </Provider>
+    </BrowserRouter>
+    </React.StrictMode>,
 );
 
 // If you want to start measuring performance in your app, pass a function

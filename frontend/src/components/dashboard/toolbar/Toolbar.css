@@ -1,0 +1,49 @@
+.toolbar {
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    background-color: #36D6C3; 
+    /* #C1FCF5, #36D6C3, #00C48B */
+    border-style: solid;
+    border-color: white;
+    border-width: 3px;
+    width: calc(100% - 2rem);
+    height: 50px;
+    outline: 0.3rem solid #468878;
+    border: 0.3rem inset #E3FFFB;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* #468878 */
+
+.toolbar > button {
+    width: 8vw;
+    min-height: 3vh;
+    max-height: 4vh;
+}
+
+.toolbar > span {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.toolbar > span > span {
+    width: 25vw;
+}
+
+.subpage_title {
+    display: block;
+    width: 250px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}

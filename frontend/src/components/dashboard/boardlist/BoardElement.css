@@ -1,0 +1,48 @@
+a {
+    text-decoration: none;
+    color: black;
+}
+
+a:hover {
+    text-decoration: none;
+    color: black;
+}
+
+.boardBox {
+    width: 13vw;
+    height: 13vw;
+    outline: 0.15rem solid black;
+    background-color: #36D6C3;
+    border-radius: 1vw;
+    box-shadow: 5px 10px 5px #d4d4d4;
+    margin: 15px;
+    padding: 5px;
+    display: grid;
+    grid-template-rows: 15% 25% 1fr;
+    overflow: hidden;
+}
+
+.boardBox > * {
+    padding: 10px;
+    margin: 0px;
+}
+
+.tagsBox {
+    display: flex;
+    justify-content: flex-end;
+    padding: 0px;
+}
+
+.boardBox > h3 {
+    background-color: #36D6C3;
+    border-bottom: 0.15rem solid black;
+}
+
+.boardBox > article {
+    background-color: #36D6C3;
+    line-height: 1.5em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-box-orient: vertical;
+}
+
