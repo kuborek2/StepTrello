@@ -24,10 +24,10 @@ const BoardPath = () => {
                 <Link to={"/access/dashboard/board?name="+board}>
                     { board }
                 </Link> } &nbsp;
-            { note !== "" && 
+            {/* { note !== "" && 
                 <Link to={"/access/dashboard/board?name="+board+"/note?name="+note}>
                     { note }
-                </Link> } &nbsp;
+                </Link> } &nbsp; */}
         </div>
     );
 }

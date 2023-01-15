@@ -28,11 +28,15 @@ public class Board implements Serializable {
     @Column(name = "tag_name")
     private String tagName;
 
+    @Column(name = "description")
+    private String description;
+
     private Board(Board.Builder builder){
         boardId = builder.board_id;
         boardName = builder.board_name;
         ownerLogin = builder.owner_login;
         tagName = builder.tag_name;
+        description = builder.description;
     }
     public Board() {}
 
@@ -41,6 +45,9 @@ public class Board implements Serializable {
         private String board_name;
         private String owner_login;
         private String tag_name;
+
+        private String description;
+
 
         public Builder () {
         }
@@ -65,7 +72,10 @@ public class Board implements Serializable {
             return this;
         }
 
-
+        public Board.Builder description(String description){
+            this.description = description;
+            return this;
+        }
 
         public Board build() {
             return new Board(this);

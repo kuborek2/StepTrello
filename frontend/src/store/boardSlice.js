@@ -1,8 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
 
 const initialState = {
     boardName: "",
     boardId: -1,
+    boardsList: []
 }
 
 const boardSlice = createSlice({
@@ -12,9 +14,12 @@ const boardSlice = createSlice({
         setBoardName: (state, action) => {
             [ state.boardName, state.boardId ] = action.payload
         },
+        setBoardsList: (state, action) => {
+            state.boardsList = action.payload;
+        }
     },
 });
 
-export const { setBoardName, getBoardName } = boardSlice.actions;
+export const { setBoardName, setBoardsList } = boardSlice.actions;
 
 export default boardSlice.reducer;

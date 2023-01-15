@@ -34,6 +34,7 @@ root.render(
             <Route path="" element={<BoardsList />}/>
             <Route path="board" element={<BoardPage />}>
               <Route path="" element={<NotesList />}/>
+              
             </Route>
             <Route path="add-board" element={<AddBoard/>}/>
             

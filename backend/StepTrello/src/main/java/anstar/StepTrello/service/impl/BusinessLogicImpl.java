@@ -118,8 +118,8 @@ public class BusinessLogicImpl implements BusinessLogic {
     }
 
     @Override
-    public void deleteBoard(String boardName) {
-        boardRepository.deleteBoardByName(boardName);
+    public void deleteBoard(int id) {
+        boardRepository.deleteBoardByBoardId(id);
     }
 
     @Override
@@ -131,19 +131,21 @@ public class BusinessLogicImpl implements BusinessLogic {
 
     @Override
     public Optional<BoardDto> updateBoard(Integer boardId , BoardDto boardDto) {
-        Board board = boardRepository.findBoardByBoardId(boardId);
+//        Board board = boardRepository.findBoardByBoardId(boardId);
+//
+//        if(board != null){
 
-        if(board != null){
+        Board boardBuilder = new Board.Builder()
+                .board_id(boardId)
+                .board_name(boardDto.getName())
+                .owner_login(boardDto.getOwnerLogin())
+                .tag_name(boardDto.getTagName())
+                .description(boardDto.getDescription())
+                .build();
 
-            Board boardBuilder = new Board.Builder()
-                    .board_id(boardId)
-                    .board_name(boardDto.getName())
-                    .owner_login(boardDto.getOwnerLogin())
-                    .tag_name(String.valueOf(boardDto.getTagName()))
-                    .build();
+        boardRepository.save(boardBuilder);
 
-            boardRepository.save(boardBuilder);
-        }
+//        }
         return Optional.ofNullable(boardDto);
     }
 

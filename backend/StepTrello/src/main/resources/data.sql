@@ -16,14 +16,15 @@ CREATE TABLE board (
     board_name VARCHAR(30) ,
     owner_login VARCHAR(25),
     collaborators_list VARCHAR ARRAY,
-    tag_name VARCHAR(6)
+    tag_name VARCHAR(6),
+    description VARCHAR(300)
 );
 
 INSERT INTO board (board_name,owner_login,tag_name) VALUES   ('tablica1','adam4','RED');
 INSERT INTO board (board_name,owner_login,tag_name) VALUES   ('tablica2','adam4','YELLOW');
-INSERT INTO board (board_name,owner_login,tag_name) VALUES   ('tablica3','adam4','GREY');
+INSERT INTO board (board_name,owner_login,tag_name) VALUES   ('tablica3','adam4','RED');
 INSERT INTO board (board_name,owner_login,tag_name) VALUES   ('tablica4','adam1','GREEN');
-INSERT INTO board (board_name,owner_login,tag_name) VALUES   ('tablica5','adam1','NONE');
+INSERT INTO board (board_name,owner_login,tag_name) VALUES   ('tablica5','adam1','YELLOW');
 
 
 

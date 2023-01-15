@@ -29,4 +29,6 @@ public interface BoardRepository extends JpaRepository<Board, String>, CrudRepos
 
     ArrayList<Board> findBoardByOwnerLogin(String ownerLogin);
 
+    void deleteBoardByBoardId(int BoardId);
+
 }

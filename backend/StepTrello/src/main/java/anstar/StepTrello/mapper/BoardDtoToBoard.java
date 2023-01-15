@@ -16,7 +16,8 @@ public class BoardDtoToBoard implements Converter<Board, BoardDto>{
         return new Board.Builder()
                 .board_name(boardDto.getName())
                 .owner_login(boardDto.getOwnerLogin())
-                .tag_name(String.valueOf(boardDto.getTagName()))
+                .tag_name(boardDto.getTagName())
+                .description(boardDto.getDescription())
                 .build();
     }
 }

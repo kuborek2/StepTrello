@@ -3,8 +3,9 @@ import Tag from './Tag';
 import { Link } from 'react-router-dom';
 import { useDispatch } from "react-redux";
 import { setBoardName } from '../../../store/boardSlice'
+import { Button } from '@mui/material';
 
-const BoardElement = ({element}) => {
+const BoardElement = ({element, editFunction}) => {
   
     const dispatch = useDispatch()
 
@@ -20,10 +21,10 @@ const BoardElement = ({element}) => {
             onClick={() => changeBoardSliceState()}>
             <div className='boardBox'>
                 <div className='tagsBox'>
-                    <Tag/>
+                    <Tag tag_color={element.tagName}/>
                 </div>
                 <h3>
-                    {element.name}
+                    {element.board_id}. {element.name}
                 </h3>
                 <article>
                     {element.description}

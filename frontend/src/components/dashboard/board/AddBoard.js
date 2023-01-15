@@ -30,7 +30,7 @@ const AddBoard = () => {
         <input type="text" id="login" name="login"/><br/>
 
         <label for="cemail">Collabolators:</label><br/>
-        <Autocomplete
+        {/* <Autocomplete
           disableClearable
           multiple
           id="multiple-limit-collabolators"
@@ -44,7 +44,7 @@ const AddBoard = () => {
             <TextField {...params} variant="standard" sc={{ paddingLeft: '5vw' }} />
           )}
           sx={{ width: '20vw', marginBottom: '10px' }}
-        /><br/>
+        /><br/> */}
 
         <label for="cemail">Tag: </label><br/>
         <Autocomplete
