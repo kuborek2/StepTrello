@@ -207,4 +207,10 @@ public class BusinessLogicImpl implements BusinessLogic {
         }
     }
 
+    @Override
+    public ArrayList<BoardDto> getBoardsByUserName(String userName) {
+        ArrayList<Board> boardArrayList = boardRepository.findBoardByOwnerLogin(userName);
+        return boardToBoardDto.convert(boardArrayList);
+    }
+
 }

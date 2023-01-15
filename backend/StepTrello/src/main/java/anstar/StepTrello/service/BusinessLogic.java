@@ -1,6 +1,5 @@
 package anstar.StepTrello.service;
 
-import anstar.StepTrello.enums.Tags;
 import anstar.StepTrello.model.BoardDto;
 import anstar.StepTrello.model.NoteDto;
 import anstar.StepTrello.model.UserDto;
@@ -39,5 +38,6 @@ public interface BusinessLogic {
 
     public Boolean updateTag(Integer boardId , String tag);
 
+    public ArrayList<BoardDto> getBoardsByUserName(String userName);
 
 }

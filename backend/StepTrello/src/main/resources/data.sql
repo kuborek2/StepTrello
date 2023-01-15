@@ -19,9 +19,9 @@ CREATE TABLE board (
     tag_name VARCHAR(6)
 );
 
-INSERT INTO board (board_name,owner_login,tag_name) VALUES   ('tablica1','adam1','RED');
-INSERT INTO board (board_name,owner_login,tag_name) VALUES   ('tablica2','adam1','YELLOW');
-INSERT INTO board (board_name,owner_login,tag_name) VALUES   ('tablica3','adam1','GREY');
+INSERT INTO board (board_name,owner_login,tag_name) VALUES   ('tablica1','adam4','RED');
+INSERT INTO board (board_name,owner_login,tag_name) VALUES   ('tablica2','adam4','YELLOW');
+INSERT INTO board (board_name,owner_login,tag_name) VALUES   ('tablica3','adam4','GREY');
 INSERT INTO board (board_name,owner_login,tag_name) VALUES   ('tablica4','adam1','GREEN');
 INSERT INTO board (board_name,owner_login,tag_name) VALUES   ('tablica5','adam1','NONE');
 

@@ -61,6 +61,16 @@ public class BoardController {
         return new ResponseEntity<>(boardsDto, HttpStatus.OK);
     }
 
+    // Get all boards by userName
+    @CrossOrigin
+    @GetMapping(value = "/board/{userName}")
+    public ResponseEntity<ArrayList<BoardDto>> getBoardsByUserName(@PathVariable String userName) {
+        LOGGER.info("find all boards by user name: " + userName);
+
+        ArrayList<BoardDto> boardsDto = businessLogic.getBoardsByUserName(userName);
+        return new ResponseEntity<>(boardsDto, HttpStatus.OK);
+    }
+
     //Update board
     @CrossOrigin
     @PutMapping(value = "/board/{boardId}")

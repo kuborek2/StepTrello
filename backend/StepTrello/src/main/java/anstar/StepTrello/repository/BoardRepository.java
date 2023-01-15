@@ -11,6 +11,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 @Repository
@@ -26,6 +27,6 @@ public interface BoardRepository extends JpaRepository<Board, String>, CrudRepos
 
     Board findBoardByBoardId(Integer boardId);
 
-    Board findOneByBoardName(String boardName);
+    ArrayList<Board> findBoardByOwnerLogin(String ownerLogin);
 
 }
