@@ -1,0 +1,218 @@
+package anstar.StepTrello.service.impl;
+
+import anstar.StepTrello.Entity.Board;
+import anstar.StepTrello.Entity.Note;
+import anstar.StepTrello.Entity.User;
+import anstar.StepTrello.enums.Tags;
+import anstar.StepTrello.mapper.Converter;
+import anstar.StepTrello.model.BoardDto;
+import anstar.StepTrello.model.NoteDto;
+import anstar.StepTrello.model.UserDto;
+
+import anstar.StepTrello.repository.BoardRepository;
+import anstar.StepTrello.repository.NoteRepository;
+import anstar.StepTrello.repository.UserRepository;
+import anstar.StepTrello.service.BusinessLogic;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+@Slf4j
+@Service
+public class BusinessLogicImpl implements BusinessLogic {
+
+    private final UserRepository userRepository;
+    private final BoardRepository boardRepository;
+    private final NoteRepository noteRepository;
+    private final Converter<List<UserDto>, List<User>> userListMapper;
+    private final Converter<User, UserDto> userDtoToUser;
+    private final Converter<UserDto, User> userToUserDto;
+    private final Converter<ArrayList<BoardDto>,ArrayList<Board>> boardToBoardDto;
+    private final Converter<Board,BoardDto> boardDtoToBoard;
+    private final Converter<NoteDto,Note> noteToNoteDto;
+    private final Converter<Note,NoteDto> noteDtoToNote;
+    private final Converter<ArrayList<NoteDto>, ArrayList<Note>> notesToNoteDto;
+
+
+
+    public BusinessLogicImpl(UserRepository userRepository,
+                             BoardRepository boardRepository,
+                             NoteRepository noteRepository, Converter<List<UserDto>, List<User>> userListMapper,
+                             Converter<User, UserDto> userDtoToUser,
+                             Converter<UserDto, User> userToUserDto,
+                             Converter<ArrayList<BoardDto>, ArrayList<Board>> boardToBoardDto,
+                             Converter<Board, BoardDto> boardDtoToBoard,
+                             Converter<NoteDto, Note> noteToNoteDto, Converter<Note, NoteDto> noteDtoToNote,
+                             Converter<ArrayList<NoteDto>, ArrayList<Note>> notesToNoteDto) {
+        this.userRepository = userRepository;
+        this.boardRepository = boardRepository;
+        this.noteRepository = noteRepository;
+        this.userListMapper = userListMapper;
+        this.userDtoToUser = userDtoToUser;
+        this.userToUserDto = userToUserDto;
+        this.boardToBoardDto = boardToBoardDto;
+        this.boardDtoToBoard = boardDtoToBoard;
+        this.noteToNoteDto = noteToNoteDto;
+        this.noteDtoToNote = noteDtoToNote;
+        this.notesToNoteDto = notesToNoteDto;
+    }
+
+    // User
+    @Override
+    public Optional<UserDto> saveUser(UserDto userDto) {
+
+        System.out.println(userDto);
+        Optional<User> userOptional = Optional.ofNullable(userRepository.findUserByUsername(userDto.getLogin()));
+        if(userOptional.isPresent()){
+            throw new IllegalStateException("Login taken");
+        }
+
+        userRepository.save(userDtoToUser.convert(userDto));
+
+        return  Optional.ofNullable(userDto);
+    }
+
+
+    @Override
+    public Optional<UserDto> getUser(String login) {
+        log.info(login);
+        return Optional.ofNullable(userToUserDto.convert(userRepository.findUserByUsername(login)));
+
+    }
+
+    public List <UserDto> getAllUsers() {
+
+        List<User> users = userRepository.findAll();
+        System.out.println(userListMapper.convert(users));
+        return userListMapper.convert(users) ;
+
+    }
+
+    @Override
+    public void deleteUser(String login) {
+
+        userRepository.deleteUserByUsername(login);
+
+    }
+
+    // Boards
+    @Override
+    public Optional<BoardDto> addBoard(BoardDto boardDto) {
+
+        System.out.println(boardDto);
+        Optional<Board> boardOptional = boardRepository.findBoardByBoardName(boardDto.getName());
+        if(boardOptional.isPresent()){
+            throw new IllegalStateException("Name of board taken");
+        }
+
+        boardRepository.save(boardDtoToBoard.convert(boardDto));
+
+
+        return  Optional.ofNullable(boardDto);
+
+
+    }
+
+    @Override
+    public void deleteBoard(int id) {
+        boardRepository.deleteBoardByBoardId(id);
+    }
+
+    @Override
+    public ArrayList<BoardDto> getBoards() {
+
+    ArrayList <Board> boards = (ArrayList<Board>) boardRepository.findAll();
+    return boardToBoardDto.convert(boards);
+    }
+
+    @Override
+    public Optional<BoardDto> updateBoard(Integer boardId , BoardDto boardDto) {
+//        Board board = boardRepository.findBoardByBoardId(boardId);
+//
+//        if(board != null){
+
+        Board boardBuilder = new Board.Builder()
+                .board_id(boardId)
+                .board_name(boardDto.getName())
+                .owner_login(boardDto.getOwnerLogin())
+                .tag_name(boardDto.getTagName())
+                .description(boardDto.getDescription())
+                .build();
+
+        boardRepository.save(boardBuilder);
+
+//        }
+        return Optional.ofNullable(boardDto);
+    }
+
+    // Notes
+    @Override
+    public Optional<NoteDto> addNote(NoteDto noteDto) {
+
+        System.out.println(noteDto);
+
+        noteRepository.save(noteDtoToNote.convert(noteDto));
+
+        return  Optional.ofNullable(noteDto);
+    }
+
+    @Override
+    public void deleteNote(int noteId) {
+
+        noteRepository.deleteNoteByNoteId(noteId);
+    }
+
+    @Override
+    public ArrayList<NoteDto> getNotes() {
+
+        ArrayList<Note> notes = (ArrayList<Note>) noteRepository.findAll();
+        return notesToNoteDto.convert(notes);
+
+    }
+
+    @Override
+    public Optional<NoteDto> updateNote(NoteDto noteDto) {
+        Note note = noteRepository.findNoteByNoteId(noteDto.getNoteId());
+        if(note != null){
+            Note noteBuilder = new Note.Builder()
+                    .note_id(note.getNoteId())
+                    .title(noteDto.getTitle())
+                    .description(noteDto.getNoteContent())
+                    .board_id(noteDto.getBoardId())
+                    .build();
+            noteRepository.save(noteBuilder);
+        }
+        return Optional.ofNullable(noteDto);
+    }
+
+    // Tag
+    @Override
+    public Boolean updateTag( Integer boardId , String tag ) {
+        Board board = boardRepository.findBoardByBoardId(boardId);
+
+        if(board != null){
+            Board boardBuilder = new Board.Builder()
+                    .board_id(board.getBoardId())
+                    .board_name(board.getBoardName())
+                    .owner_login(board.getOwnerLogin())
+                    .tag_name(tag)
+                    .build();
+
+            boardRepository.save(boardBuilder);
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    @Override
+    public ArrayList<BoardDto> getBoardsByUserName(String userName) {
+        ArrayList<Board> boardArrayList = boardRepository.findBoardByOwnerLogin(userName);
+        return boardToBoardDto.convert(boardArrayList);
+    }
+
+}

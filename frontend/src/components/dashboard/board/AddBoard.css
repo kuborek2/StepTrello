@@ -1,0 +1,23 @@
+.addFormBox {
+  width: 100%;
+  height: calc(100vh - 40px - 50px - 1.2rem - 105px );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.addFormBox > form > input {
+  margin-bottom: 10px;
+  width: 20vw;
+}
+
+.addFormBox > form > div {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.addFormBox > form > div > input, button {
+  width: 5vw;
+}

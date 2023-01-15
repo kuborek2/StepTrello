@@ -1,0 +1,16 @@
+.tag {
+    display: flex;
+    align-items: center;
+    padding: 0.5vw;
+    padding-left: 0.5vw;
+    width: 2vw;
+    height: 0.5vw;
+    border-radius: 0% 25% 25% 0% / 0% 50% 50% 100%;
+}
+    
+.tag > div {
+    width: 1vw;
+    height: 1vw;
+    border-radius: 1vw;
+    background-color: white;
+}
