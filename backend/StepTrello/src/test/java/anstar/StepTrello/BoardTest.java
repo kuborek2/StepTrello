@@ -53,14 +53,14 @@ public class BoardTest {
         String owner = "Adam";
         ArrayList<NoteDto> notesArrayList = new ArrayList<>();
         ArrayList<UserDto> collaboratorsArrayList = new ArrayList<>();
-        Tags tagName = Tags.NONE;
 
-                BoardDto boardDto = new BoardDto(
+        BoardDto boardDto = new BoardDto(
+                8,
                 name,
                 owner,
-                        notesArrayList,
                 collaboratorsArrayList,
-                tagName
+                "YELLOW",
+                "opis"
         );
 
         //when
@@ -70,8 +70,7 @@ public class BoardTest {
         assertTrue(result.isPresent());
         assertTrue(result.get().getName() == name);
         assertTrue(result.get().getOwnerLogin() == owner);
-        assertTrue(result.get().getTagName() == tagName);
-        assertTrue(result.get().getNotesArrayList().equals(notesArrayList));
+        assertTrue(result.get().getTagName() == "YELLOW");
         assertTrue(result.get().getCollaboratorsArrayList().equals(collaboratorsArrayList));
     }
 
@@ -79,22 +78,21 @@ public class BoardTest {
     void canDeleteBoard(){
         String name = "My Board";
         String owner = "Adam";
-        ArrayList<NoteDto> notesArrayList = new ArrayList<>();
         ArrayList<UserDto> collaboratorsArrayList = new ArrayList<>();
-        Tags tagName = Tags.NONE;
 
         BoardDto boardDto = new BoardDto(
+                8,
                 name,
                 owner,
-                notesArrayList,
                 collaboratorsArrayList,
-                tagName
+                "YELLOW",
+                "opis"
         );
 
         //when
 
         Optional<BoardDto> newBoard = businessLogic.addBoard(boardDto);
-        businessLogic.deleteBoard(boardDto.getName());
+        businessLogic.deleteBoard(8);
         Optional<Board> deletedBoard = boardRepository.findBoardByBoardName(boardDto.getName());
 
         //then
@@ -108,31 +106,29 @@ public class BoardTest {
         Integer boardId= 1;
         String name = "My Board";
         String owner = "Adam";
-        ArrayList<NoteDto> notesArrayList = new ArrayList<>();
         ArrayList<UserDto> collaboratorsArrayList = new ArrayList<>();
-        Tags tagName = Tags.NONE;
 
 
         String name2 = "My Board";
         String owner2 = "Adam";
-        ArrayList<NoteDto> notesArrayList1 = new ArrayList<>();
         ArrayList<UserDto> collaboratorsArrayList1 = new ArrayList<>();
-        Tags tagName2 = Tags.NONE;
 
         BoardDto boardDto = new BoardDto(
+                8,
                 name,
                 owner,
-                notesArrayList,
                 collaboratorsArrayList,
-                tagName
+                "YELLOW",
+                "opis"
         );
 
         BoardDto boardDto2 = new BoardDto(
+                9,
                 name2,
                 owner2,
-                notesArrayList1,
                 collaboratorsArrayList1,
-                tagName2
+                "YELLOW",
+                "taki se opis"
         );
 
         //when
@@ -143,8 +139,6 @@ public class BoardTest {
         assertTrue(result.isPresent());
         assertTrue(result.get().getName() == name);
         assertTrue(result.get().getOwnerLogin() == owner);
-        assertTrue(result.get().getTagName() == tagName);
-        assertTrue(result.get().getNotesArrayList().equals(notesArrayList));
         assertTrue(result.get().getCollaboratorsArrayList().equals(collaboratorsArrayList));
     }
 
@@ -160,11 +154,12 @@ public class BoardTest {
         Tags tagName = Tags.NONE;
 
         BoardDto boardDto = new BoardDto(
+                8,
                 name,
                 owner,
-                notesArrayList,
                 collaboratorsArrayList,
-                tagName
+                "YELLOW",
+                "opis"
         );
 
         String newTag = "YELLOW";
