@@ -1,11 +1,22 @@
 package anstar.StepTrello;
 
+import anstar.StepTrello.Entity.Board;
+import anstar.StepTrello.Entity.Note;
 import anstar.StepTrello.model.NoteDto;
 import anstar.StepTrello.model.UserDto;
+import anstar.StepTrello.repository.BoardRepository;
+import anstar.StepTrello.repository.NoteRepository;
+import anstar.StepTrello.service.BusinessLogic;
 import anstar.StepTrello.service.impl.BusinessLogicImpl;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
 import java.util.Optional;
@@ -13,11 +24,21 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@Slf4j
+@ExtendWith(MockitoExtension.class)
 public class NoteTest {
-    final BusinessLogicImpl businessLogicImpl = new BusinessLogicImpl();
+
+
+    @InjectMocks
+    BusinessLogicImpl businessLogic;
+
+    @Mock
+    NoteRepository noteRepository;
+
+
 
     @Tag("Note")
-    @ParameterizedTest
+    @Test
 
 
     void canCreateNote() {
@@ -25,13 +46,15 @@ public class NoteTest {
 
         String title = "CoolNote";
         String noteContent = "This is content of this note";
+        Integer boardId = 1;
         NoteDto noteDto = new NoteDto(
                 title,
-                noteContent
+                noteContent,
+                boardId
         );
 
         //when
-        Optional<NoteDto> result = businessLogicImpl.addNote(noteDto);
+        Optional<NoteDto> result = businessLogic.addNote(noteDto);
 
         //then
         assertTrue(result.isPresent());
@@ -51,70 +74,78 @@ public class NoteTest {
             ",,",
 
     })
-    void canCreateNonValidNote( String title, String noteContent) {
+    void canCreateNonValidNote( String title, String noteContent, Integer boardId) {
 
         //given
         NoteDto noteDto = new NoteDto(
                 title,
-                noteContent
+                noteContent,
+                boardId
         );
 
         //when
-        Optional<NoteDto> result = businessLogicImpl.addNote(noteDto);
+        Optional<NoteDto> result = businessLogic.addNote(noteDto);
 
         //then
         assertFalse(result.isPresent());
     }
-    @ParameterizedTest
+    @Test
     void canDeleteNote() {
 
         //given
         String title = "CoolNote";
         String noteContent = "This is content of this note";
+        Integer boardId = 1;
         NoteDto noteDto = new NoteDto(
                 title,
-                noteContent
+                noteContent,
+                boardId
         );
 
         //when
-        Optional<NoteDto> newNote = businessLogicImpl.addNote(noteDto);
-        Boolean result = businessLogicImpl.deleteNote(newNote.get().getNoteId());
+        Optional<NoteDto> newNote = businessLogic.addNote(noteDto);
+        businessLogic.deleteNote(newNote.get().getNoteId());
+        Optional<Note> deletedNote = noteRepository.findNoteByTitle(noteDto.getTitle());
 
         //then
-        assertTrue(result);
+        assertTrue(deletedNote.isEmpty());
 
 
     }
 
-    @ParameterizedTest
+    @Test
     void noteShouldNotBeDeleted() {
             //given
             String title = "CoolNote";
             String noteContent = "This is content of this note";
+            Integer boardId = 1;
             NoteDto noteDto = new NoteDto(
                     title,
-                    noteContent
+                    noteContent,
+                    boardId
             );
 
             //when
-            Optional<NoteDto> newNote = businessLogicImpl.addNote(noteDto);
-            Boolean result = businessLogicImpl.deleteNote(newNote.get().getNoteId());
+            Optional<NoteDto> newNote = businessLogic.addNote(noteDto);
+            businessLogic.deleteNote(newNote.get().getNoteId());
+            Optional<Note> deletedNote = noteRepository.findNoteByTitle(noteDto.getTitle());
 
             //then
-            assertFalse(result);
+            assertFalse(deletedNote.isEmpty());
     }
 
-    @ParameterizedTest
-    void canNoteBeUpdated(Integer noteId, String title, String noteContent) {
+    @Test
+    void canNoteBeUpdated(Integer noteId, String title, String noteContent, Integer boardId) {
 
         //given
         NoteDto noteDto = new NoteDto(
                 noteId,
                 title,
-                noteContent
+                noteContent,
+                boardId
         );
         //when
-        Optional<NoteDto> result = businessLogicImpl.updateNote(noteDto);
+        Optional<NoteDto> result = businessLogic.updateNote(noteDto);
         //then
         assertTrue(result.isPresent());
         assertTrue(result.get().getNoteId() == noteId);
@@ -122,17 +153,18 @@ public class NoteTest {
         assertTrue(result.get().getNoteContent() == noteContent);
 
     }
-    @ParameterizedTest
-    void canNoteBeNotUpdated(Integer noteId, String title, String noteContent) {
+    @Test
+    void canNoteBeNotUpdated(Integer noteId, String title, String noteContent, Integer boardId) {
 
         //given
         NoteDto noteDto = new NoteDto(
                 noteId,
                 title,
-                noteContent
+                noteContent,
+                boardId
         );
         //when
-        Optional<NoteDto> result = businessLogicImpl.updateNote(noteDto);
+        Optional<NoteDto> result = businessLogic.updateNote(noteDto);
         //then
         assertFalse(result.isPresent());
         assertFalse(result.get().getNoteId() == noteId);
