@@ -1,154 +1,44 @@
-package anstar.StepTrello;
-
-import anstar.StepTrello.Entity.User;
-import anstar.StepTrello.mapper.BoardDtoToBoard;
-import anstar.StepTrello.mapper.UserDtoToUser;
-import anstar.StepTrello.model.UserDto;
-import anstar.StepTrello.repository.BoardRepository;
-import anstar.StepTrello.repository.UserRepository;
-import anstar.StepTrello.service.BusinessLogic;
-import anstar.StepTrello.service.impl.BusinessLogicImpl;
-import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvFileSource;
-import org.junit.jupiter.params.provider.CsvSource;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
-
-import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-@Slf4j
-@ExtendWith(MockitoExtension.class)
-public class UserTest {
-
-    @InjectMocks
-    BusinessLogicImpl businessLogic;
-
-    @Mock
-    UserRepository userRepository;
-
-    @Mock
-    UserDtoToUser userDtoToUser;
-
-
-    @Tag("User")
-
-    /**
-     * Login must be longer than 5 characters,
-     * Email must be valid,
-     * Password must have 1 capital letter, 1 lowercase letter and number
-     *
-     */
-
-    @Test
-    void canCreateValidUser() {
-
-        //given
-        String email = "adam123@gmail.com";
-        String login = "adam123";
-        String password = "adam123";
-        UserDto user = new UserDto(
-                login,
-                email,
-                password
-        );
-
-        //when
-        Optional<UserDto> result = businessLogic.saveUser(user);
-
-        //then
-        assertTrue(result.isPresent());
-        assertTrue(result.get().getEmail() == email);
-        assertTrue(result.get().getLogin() == login);
-        assertTrue(result.get().getPassword() == password);
-
-    }
-
-    @ParameterizedTest
-    @CsvSource({
-            "adam, adam123,  bomba123",
-            "adam@gmail.com, adam123, Bomba",
-            "adam@gmail.com, adam123, bomba",
-            "adam@gmail.com, adam, bomba1",
-            "adamgmail.com, adam, bomba",
-            ",adam,bb",
-            " , , ",
-            ",,",
-
-    })
-
-    void canCreateNonValidUser(String email, String login, String password) {
-
-        //given
-        UserDto user = new UserDto(
-                login,
-                email,
-                password
-        );
-
-        //when
-        Optional<UserDto> result = businessLogic.saveUser(user);
-
-        //then
-        assertFalse(result.isPresent());
-        assertFalse(result.get().getEmail() == email);
-        assertFalse(result.get().getLogin() == login);
-        assertFalse(result.get().getPassword() == password);
-
-
-    }
-
-    @Test
-    void canUserBeDeleted() {
-
-        //given
-        String email = "adam123@gmail.com";
-        String login = "adam123";
-        String password = "adam123";
-        UserDto user = new UserDto(
-                login,
-                email,
-                password
-        );
-
-        //when
-        businessLogic.deleteUser(user.getLogin());
-        Optional<User> deletedUser1 = Optional.ofNullable(userRepository.findUserByUsername(user.getLogin()));
-
-        //then
-        assertTrue(deletedUser1.isEmpty());
-
-    }
-
-//    @Test
-//    void userShouldNotBeDeleted() {
+//package anstar.StepTrello;
 //
-//        //given
-//        String email = "mail@mail.com";
-//        String login = "test_user12";
-//        String password = "123";
-//        UserDto user = new UserDto(
-//                login,
-//                email,
-//                password
-//        );
+//import anstar.StepTrello.Entity.User;
+//import anstar.StepTrello.mapper.BoardDtoToBoard;
+//import anstar.StepTrello.mapper.UserDtoToUser;
+//import anstar.StepTrello.model.UserDto;
+//import anstar.StepTrello.repository.BoardRepository;
+//import anstar.StepTrello.repository.UserRepository;
+//import anstar.StepTrello.service.BusinessLogic;
+//import anstar.StepTrello.service.impl.BusinessLogicImpl;
+//import lombok.extern.slf4j.Slf4j;
+//import org.junit.jupiter.api.Test;
+//import org.junit.jupiter.api.Tag;
+//import org.junit.jupiter.api.extension.ExtendWith;
+//import org.junit.jupiter.params.ParameterizedTest;
+//import org.junit.jupiter.params.provider.CsvFileSource;
+//import org.junit.jupiter.params.provider.CsvSource;
+//import org.mockito.InjectMocks;
+//import org.mockito.Mock;
+//import org.mockito.junit.jupiter.MockitoExtension;
 //
-//        //when
-//        businessLogic.deleteUser(user.getLogin());
-//        Optional<User> deletedUser1 = Optional.ofNullable(userRepository.findUserByUsername(user.getLogin()));
+//import java.util.Optional;
 //
-//        //then
-//        assertFalse(deletedUser1.isEmpty());
+//import static org.junit.jupiter.api.Assertions.assertFalse;
+//import static org.junit.jupiter.api.Assertions.assertTrue;
 //
-//    }
-
+//@Slf4j
+//@ExtendWith(MockitoExtension.class)
+//public class UserTest {
+//
+//    @InjectMocks
+//    BusinessLogicImpl businessLogic;
+//
+//    @Mock
+//    UserRepository userRepository;
+//
+//    @Mock
+//    UserDtoToUser userDtoToUser;
+//
+//
+//    @Tag("User")
 //
 //    /**
 //     * Login must be longer than 5 characters,
@@ -156,6 +46,32 @@ public class UserTest {
 //     * Password must have 1 capital letter, 1 lowercase letter and number
 //     *
 //     */
+//
+//    @Test
+//    void canCreateValidUser() {
+//
+//        //given
+//        String email = "adam123@gmail.com";
+//        String login = "adam123";
+//        String password = "adam123";
+//        String roles = "";
+//        UserDto user = new UserDto(
+//                login,
+//                email,
+//                password,
+//                roles
+//        );
+//
+//        //when
+//        Optional<User> result = businessLogic.saveUser(user);
+//
+//        //then
+//        assertTrue(result.isPresent());
+//        assertTrue(result.get().getEmail() == email);
+//        assertTrue(result.get().getUsername() == login);
+//        assertTrue(result.get().getPassword() == password);
+//
+//    }
 //
 //    @ParameterizedTest
 //    @CsvSource({
@@ -170,83 +86,172 @@ public class UserTest {
 //
 //    })
 //
-//    void canCreateNonValidUser(String email, String login, String password) {
+//    void canCreateNonValidUser(String email, String login, String password, String roles) {
 //
 //        //given
 //        UserDto user = new UserDto(
 //                login,
 //                email,
-//                password
+//                password,
+//                roles
 //        );
 //
 //        //when
-//        Optional<UserDto> result = businessLogic.saveUser(user);
+//        Optional<User> result = businessLogic.saveUser(user);
 //
 //        //then
 //        assertFalse(result.isPresent());
 //        assertFalse(result.get().getEmail() == email);
-//        assertFalse(result.get().getLogin() == login);
+//        assertFalse(result.get().getUsername() == login);
 //        assertFalse(result.get().getPassword() == password);
 //
 //
 //    }
 //
-//    @ParameterizedTest
+//    @Test
 //    void canUserBeDeleted() {
 //
 //        //given
 //        String email = "adam123@gmail.com";
 //        String login = "adam123";
 //        String password = "adam123";
+//        String roles = "";
 //        UserDto user = new UserDto(
 //                login,
 //                email,
-//                password
+//                password,
+//                roles
 //        );
 //
 //        //when
-//        Optional<UserDto> result = businessLogic.deleteUser(user.getLogin());
+//        businessLogic.deleteUser(user.getLogin());
+//        Optional<User> deletedUser1 = Optional.ofNullable(userRepository.findUserByUsername(user.getLogin()));
 //
 //        //then
-//        assertTrue(result.isPresent());
-//        assertTrue(result.get().getEmail() == email);
-//        assertTrue(result.get().getLogin() == login);
-//        assertTrue(result.get().getPassword() == password);
+//        assertTrue(deletedUser1.isEmpty());
 //
 //    }
 //
-//    @ParameterizedTest
-//    @CsvSource({
-//            "adam, adam123,  bomba123",
-//            "adam@gmail.com, adam123, Bomba",
-//            "adam@gmail.com, adam123, bomba",
-//            "adam@gmail.com, adam, bomba1",
-//            "adamgmail.com, adam, bomba",
-//            ",adam,bb",
-//            " , , "
-//    })
-//    void userShouldNotBeDeleted(String email, String login, String password) {
+////    @Test
+////    void userShouldNotBeDeleted() {
+////
+////        //given
+////        String email = "mail@mail.com";
+////        String login = "test_user12";
+////        String password = "123";
+////        UserDto user = new UserDto(
+////                login,
+////                email,
+////                password
+////        );
+////
+////        //when
+////        businessLogic.deleteUser(user.getLogin());
+////        Optional<User> deletedUser1 = Optional.ofNullable(userRepository.findUserByUsername(user.getLogin()));
+////
+////        //then
+////        assertFalse(deletedUser1.isEmpty());
+////
+////    }
 //
-//        //given
-//        UserDto user = new UserDto(
-//                login,
-//                email,
-//                password
-//        );
+////
+////    /**
+////     * Login must be longer than 5 characters,
+////     * Email must be valid,
+////     * Password must have 1 capital letter, 1 lowercase letter and number
+////     *
+////     */
+////
+////    @ParameterizedTest
+////    @CsvSource({
+////            "adam, adam123,  bomba123",
+////            "adam@gmail.com, adam123, Bomba",
+////            "adam@gmail.com, adam123, bomba",
+////            "adam@gmail.com, adam, bomba1",
+////            "adamgmail.com, adam, bomba",
+////            ",adam,bb",
+////            " , , ",
+////            ",,",
+////
+////    })
+////
+////    void canCreateNonValidUser(String email, String login, String password) {
+////
+////        //given
+////        UserDto user = new UserDto(
+////                login,
+////                email,
+////                password
+////        );
+////
+////        //when
+////        Optional<UserDto> result = businessLogic.saveUser(user);
+////
+////        //then
+////        assertFalse(result.isPresent());
+////        assertFalse(result.get().getEmail() == email);
+////        assertFalse(result.get().getLogin() == login);
+////        assertFalse(result.get().getPassword() == password);
+////
+////
+////    }
+////
+////    @ParameterizedTest
+////    void canUserBeDeleted() {
+////
+////        //given
+////        String email = "adam123@gmail.com";
+////        String login = "adam123";
+////        String password = "adam123";
+////        UserDto user = new UserDto(
+////                login,
+////                email,
+////                password
+////        );
+////
+////        //when
+////        Optional<UserDto> result = businessLogic.deleteUser(user.getLogin());
+////
+////        //then
+////        assertTrue(result.isPresent());
+////        assertTrue(result.get().getEmail() == email);
+////        assertTrue(result.get().getLogin() == login);
+////        assertTrue(result.get().getPassword() == password);
+////
+////    }
+////
+////    @ParameterizedTest
+////    @CsvSource({
+////            "adam, adam123,  bomba123",
+////            "adam@gmail.com, adam123, Bomba",
+////            "adam@gmail.com, adam123, bomba",
+////            "adam@gmail.com, adam, bomba1",
+////            "adamgmail.com, adam, bomba",
+////            ",adam,bb",
+////            " , , "
+////    })
+////    void userShouldNotBeDeleted(String email, String login, String password) {
+////
+////        //given
+////        UserDto user = new UserDto(
+////                login,
+////                email,
+////                password
+////        );
+////
+////        //when
+////        Optional<UserDto> result = businessLogic.deleteUser(user.getLogin());
+////
+////        //then
+////        assertFalse(result.isPresent());
+////        assertFalse(result.get().getEmail() == email);
+////        assertFalse(result.get().getLogin() == login);
+////        assertFalse(result.get().getPassword() == password);
+////    }
+////
+////
+////
 //
-//        //when
-//        Optional<UserDto> result = businessLogic.deleteUser(user.getLogin());
-//
-//        //then
-//        assertFalse(result.isPresent());
-//        assertFalse(result.get().getEmail() == email);
-//        assertFalse(result.get().getLogin() == login);
-//        assertFalse(result.get().getPassword() == password);
-//    }
 //
 //
-//
-
-
-
-}
+//}

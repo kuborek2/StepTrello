@@ -1,5 +1,7 @@
 package anstar.StepTrello.controller;
 
+import anstar.StepTrello.Entity.Role;
+import anstar.StepTrello.Entity.User;
 import anstar.StepTrello.model.UserDto;
 import anstar.StepTrello.service.BusinessLogic;
 import org.slf4j.Logger;
@@ -9,8 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,12 +34,14 @@ public class UserController {
 
     // Done
     @CrossOrigin
-    @PutMapping(value = "/user")
-    public ResponseEntity <Optional<UserDto>> addUser(@RequestBody UserDto userDto) {
+    @PostMapping(value = "/user")
+    public ResponseEntity <Optional<User>> addUser(@RequestBody UserDto userDto) {
         LOGGER.info("Add user " + userDto.getLogin() );
-        businessLogic.saveUser(userDto);
+//        businessLogic.saveUser(userDto);
+//        return new ResponseEntity<>(HttpStatus.CREATED);
+        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/user/save").toUriString());
+        return ResponseEntity.created(uri).body(businessLogic.saveUser(userDto));
 
-        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     // Done
@@ -70,6 +76,21 @@ public class UserController {
         return new ResponseEntity(userDto, HttpStatus.OK);
     }
 
+
+    @CrossOrigin
+    @PutMapping(value = "/role")
+    public ResponseEntity <Role> saveRole(@PathVariable String roleName) {
+        LOGGER.info("Add role " + roleName  );
+
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @CrossOrigin
+    @PutMapping(value = "/user/role")
+    public ResponseEntity  addRoleToUser(@PathVariable String userName , @PathVariable String roleName) {
+        LOGGER.info("Add role: " + roleName + " to user : " + userName);
+        return new ResponseEntity(HttpStatus.OK);
+    }
 
 
 }

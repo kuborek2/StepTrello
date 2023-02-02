@@ -1,5 +1,7 @@
 package anstar.StepTrello.service;
 
+import anstar.StepTrello.Entity.Role;
+import anstar.StepTrello.Entity.User;
 import anstar.StepTrello.model.BoardDto;
 import anstar.StepTrello.model.NoteDto;
 import anstar.StepTrello.model.UserDto;
@@ -12,7 +14,7 @@ public interface BusinessLogic {
 
     // public Optional<UserDto> saveUser(UserDto userDto);
 
-    public Optional<UserDto> saveUser(UserDto userDto);
+    public Optional<User> saveUser(UserDto userDto);
 
     public Optional<UserDto> getUser(String login);
 
@@ -39,5 +41,10 @@ public interface BusinessLogic {
     public Boolean updateTag(Integer boardId , String tag);
 
     public ArrayList<BoardDto> getBoardsByUserName(String userName);
+
+    public Role saveRole(Role role);
+
+    public void addRoleToUser (String login, String roleName);
+
 
 }
