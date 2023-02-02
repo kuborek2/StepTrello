@@ -85,6 +85,7 @@ public class BusinessLogicImpl implements BusinessLogic, UserDetailsService {
         user.getRoles().forEach(role -> {
             authorities.add(new SimpleGrantedAuthority(role.getName()));
         });
+        log.info("Authorities check: "+authorities);
         return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), authorities);
     }
 

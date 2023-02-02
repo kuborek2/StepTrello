@@ -136,7 +136,8 @@ const RegisterPage = () => {
                 {
                     login: formValues.login,
                     email: formValues.email,
-                    password: formValues.password
+                    password: formValues.password,
+                    role: []
                 },
                 registrationSettled,
                 registrationRejected,

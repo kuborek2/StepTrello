@@ -19,6 +19,8 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import java.util.Arrays;
+
 import static javax.swing.text.html.FormSubmitEvent.MethodType.GET;
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
@@ -37,25 +39,37 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.cors().and().csrf().disable();
-        http.cors().and().sessionManagement().sessionCreationPolicy(STATELESS);
-        http.cors().and().authorizeHttpRequests().antMatchers("/api/user").permitAll();
-        http.cors().and().authorizeHttpRequests().antMatchers("/api/users").permitAll();
-        http.cors().and().authorizeHttpRequests().antMatchers( HttpMethod.GET,"/api/user/**","/api/board/**").hasAnyAuthority("USER");
-        http.cors().and().authorizeHttpRequests().antMatchers( HttpMethod.POST,"/api/board/**").hasAnyAuthority("USER");
-        http.cors().and().authorizeHttpRequests().antMatchers( HttpMethod.PUT,"/user/role/**","/api/role/**","/api/board/**").hasAnyAuthority("USER");
-        http.cors().and().authorizeHttpRequests().antMatchers( HttpMethod.DELETE,"/user/role/**","/api/board/**").hasAnyAuthority("USER");
-        http.cors().and().authorizeHttpRequests().anyRequest().authenticated();
-        http.cors().and().addFilter(new CustomAuthenticationFilter(authenticationManagerBean()));
-        http.cors().and().addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
+        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        http.cors().and().csrf().disable().authorizeRequests()
+            .antMatchers("/api/user").permitAll()
+            .antMatchers("/api/users").permitAll()
+//            .antMatchers(HttpMethod.PUT, "/api/user").permitAll()
+            .antMatchers(HttpMethod.PUT, "/api/board/{boardId}").hasAnyAuthority("USER")
+            .antMatchers( HttpMethod.GET,"/api/board/**").hasAnyAuthority("USER")
+            .antMatchers(HttpMethod.DELETE, "/api/board/{id}").hasAnyAuthority("USER")
+            .anyRequest().authenticated();
+        http.addFilter(new CustomAuthenticationFilter(authenticationManagerBean()));
+        http.addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 
     @Bean
-    CorsConfigurationSource corsConfigurationSource() {
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(Arrays.asList("*"));
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
+        configuration.setAllowedHeaders(Arrays.asList("access_token", "content-type", "x-auth-token"));
+        configuration.setExposedHeaders(Arrays.asList("x-auth-token"));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues());
+        source.registerCorsConfiguration("/**", configuration);
         return source;
     }
+
+//    @Bean
+//    CorsConfigurationSource corsConfigurationSource() {
+//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//        source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues());
+//        return source;
+//    }
 
     @Bean
     @Override

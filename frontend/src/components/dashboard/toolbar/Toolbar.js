@@ -43,8 +43,11 @@ const Toolbar = () => {
 
     const requestBoardChange = async (boardInfo) => {
         handleClose();
+        const saved = localStorage.getItem("access_token");
+        const initial = JSON.parse(saved);
         await BoardUtils.requestBoardChange(
             boardInfo.board_id,
+            initial,
             {
                 name: boardInfo.title,
                 ownerLogin: login.userName,
@@ -56,13 +59,15 @@ const Toolbar = () => {
             requestSettled,
             requestBoardsRejected
         )
-        await BoardUtils.requestBoards(login.userName, requestBoardsSettled, requestBoardsRejected)
+        await BoardUtils.requestBoards(login.userName, initial,requestBoardsSettled, requestBoardsRejected)
     }
 
     const deleteBoardFunction = async (id) => {
         handleClose();
-        await BoardUtils.requestBoardDeletion(id);
-        await BoardUtils.requestBoards(login.userName, requestBoardsSettled, requestBoardsRejected)
+        const saved = localStorage.getItem("access_token");
+        const initial = JSON.parse(saved);
+        await BoardUtils.requestBoardDeletion(id, initial);
+        await BoardUtils.requestBoards(login.userName, initial, requestBoardsSettled, requestBoardsRejected)
     }
 
     const editBoard = () => {

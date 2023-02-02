@@ -6,7 +6,7 @@ import TextField from '@mui/material/TextField';
 import { FormControl, Button } from '@mui/material';
 import { useNavigate } from "react-router-dom";
 import SimpleAlert from './reusable/SimpleAlert';
-import { toggleLogin } from '../store/loginSlice';
+import { setAccessToken, toggleLogin } from '../store/loginSlice';
 import { useDispatch } from 'react-redux';
 
 const SignInPage = () => {
@@ -53,8 +53,10 @@ const SignInPage = () => {
     const registrationSettled = (response) => {
         console.log("Logowanie powidło się")
         if( response.status === 200 ){
-            console.log(response.data.acces_token)
             dispatch(toggleLogin (formValues.login))
+            let token = JSON.stringify(response.data.acces_token)
+            localStorage.setItem("access_token", token)
+            dispatch(setAccessToken(response.data.acces_token))
             navigate("/access/dashboard");
         } else registrationRejected()
     }
