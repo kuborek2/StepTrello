@@ -246,7 +246,7 @@ public class BusinessLogicImpl implements BusinessLogic, UserDetailsService {
     }
 
     @Override
-    public void addRoleToUser (String login, String roleName){
+    public User addRoleToUser (String login, String roleName){
         log.info("Finding user by name");
         User user = userRepository.findUserByUsername(login);
         log.info("Finding role by name");
@@ -254,8 +254,8 @@ public class BusinessLogicImpl implements BusinessLogic, UserDetailsService {
         log.info("Adding role to user ");
         user.getRoles().add(role);
         log.info("Updating user role;");
-        userRepository.save(user);
-
+        User returnedUser = userRepository.save(user);
+        return returnedUser;
     }
 
 

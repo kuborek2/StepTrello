@@ -11,13 +11,13 @@ import reportWebVitals from './reportWebVitals';
 import RegisterPage from './components/RegisterPage';
 import AccessPage from './components/reusable/AccessPage';
 import SignInPage from './components/SignInPage';
-import { Provider } from 'react-redux'
 import store from './store/storeIndex';
 import DashboardPage from './components/dashboard/DashboardPage';
 import BoardPage from './components/dashboard/board/BoardPage';
 import BoardsList from './components/dashboard/boardlist/BoardsList';
 import AddBoard from './components/dashboard/board/AddBoard';
 import NotesList from './components/dashboard/board/note/NotesList';
+import { Provider } from 'react-redux';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

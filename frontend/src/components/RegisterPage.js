@@ -56,7 +56,7 @@ const RegisterPage = () => {
     const handleStyleValues = (name, value) => {
             setFormStyleValues({
             ...formStyleValues,
-            [name]:  {fieldset: {borderColor: value}},
+            [name]:  {fieldset: {borderColor: '#00C9C7'}},
             });
         };
 

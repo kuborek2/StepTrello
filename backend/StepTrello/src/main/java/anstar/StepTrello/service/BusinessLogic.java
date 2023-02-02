@@ -44,7 +44,7 @@ public interface BusinessLogic {
 
     public Role saveRole(Role role);
 
-    public void addRoleToUser (String login, String roleName);
+    public User addRoleToUser (String login, String roleName);
 
 
 }

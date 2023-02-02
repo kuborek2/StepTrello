@@ -20,6 +20,4 @@ public class UserDto {
     private String email;
     private String password;
     private ArrayList<Role> role;
-
-
 }

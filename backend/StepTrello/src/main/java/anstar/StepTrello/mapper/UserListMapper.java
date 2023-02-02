@@ -15,6 +15,6 @@ public class UserListMapper implements Converter<List<UserDto>, List<User>> {
     public List<UserDto> convert(List<User> users) {
 
         return users.stream()
-                .map(user -> new UserDto(user.getUsername(),user.getEmail(),user.getPassword(), (ArrayList<Role>) user.getRoles())).collect(Collectors.toList());
+                .map(user -> new UserDto(user.getUsername(),user.getEmail(),user.getPassword(), new ArrayList<>(user.getRoles()))).collect(Collectors.toList());
     }
 }

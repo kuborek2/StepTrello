@@ -35,12 +35,16 @@ public class UserController {
     // Done
     @CrossOrigin
     @PostMapping(value = "/user")
-    public ResponseEntity <Optional<User>> addUser(@RequestBody UserDto userDto) {
+    public ResponseEntity<Optional<User>> addUser(@RequestBody UserDto userDto) {
         LOGGER.info("Add user " + userDto.getLogin() );
-//        businessLogic.saveUser(userDto);
-//        return new ResponseEntity<>(HttpStatus.CREATED);
+        Optional<User> optionalUser = businessLogic.saveUser(userDto);
+        Optional<User> returnedUser;
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/user/save").toUriString());
-        return ResponseEntity.created(uri).body(businessLogic.saveUser(userDto));
+        if( optionalUser.isPresent() )
+             returnedUser = Optional.ofNullable(businessLogic.addRoleToUser(optionalUser.get().getUsername(), "USER"));
+        else
+            return ResponseEntity.created(uri).body(Optional.empty());
+        return ResponseEntity.created(uri).body(returnedUser);
 
     }
 
