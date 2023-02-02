@@ -21,8 +21,12 @@ const requestUserRegistration = (newUser, settled, rejected) => {
 
 const requestLogIn = (credentials ,settled, rejected) => {
   return axios({
-    method: 'get',
-    url: 'http://localhost:8080/api/user/?login='+credentials.login,
+    method: 'post',
+    url: 'http://localhost:8080/login',
+    data: {
+      username: credentials.login,
+      password: credentials.password
+    }
   }).then(settled, rejected)
     .catch((err) => {console.log(err)})
 }

@@ -52,9 +52,10 @@ const SignInPage = () => {
 
     const registrationSettled = (response) => {
         console.log("Logowanie powidło się")
-        if( response.data.password === formValues.password ){
-            navigate("/access/dashboard");
+        if( response.status === 200 ){
+            console.log(response.data.acces_token)
             dispatch(toggleLogin (formValues.login))
+            navigate("/access/dashboard");
         } else registrationRejected()
     }
 
@@ -79,7 +80,7 @@ const SignInPage = () => {
         setIsBLockerOut(blockerDisplayOption.visable)
 
         await UserUtlis.requestLogIn(
-            { login: formValues.login },
+            { login: formValues.login, password: formValues.password },
             registrationSettled,
             registrationRejected,
         )
