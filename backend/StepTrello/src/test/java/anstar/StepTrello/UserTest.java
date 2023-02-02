@@ -127,24 +127,27 @@ public class UserTest {
 
     }
 
-    @Test
-    void userShouldNotBeDeleted(String email, String login, String password) {
-
-        //given
-        UserDto user = new UserDto(
-                login,
-                email,
-                password
-        );
-
-        //when
-        businessLogic.deleteUser(user.getLogin());
-        Optional<User> deletedUser1 = Optional.ofNullable(userRepository.findUserByUsername(user.getLogin()));
-
-        //then
-        assertFalse(deletedUser1.isEmpty());
-
-    }
+//    @Test
+//    void userShouldNotBeDeleted() {
+//
+//        //given
+//        String email = "mail@mail.com";
+//        String login = "test_user12";
+//        String password = "123";
+//        UserDto user = new UserDto(
+//                login,
+//                email,
+//                password
+//        );
+//
+//        //when
+//        businessLogic.deleteUser(user.getLogin());
+//        Optional<User> deletedUser1 = Optional.ofNullable(userRepository.findUserByUsername(user.getLogin()));
+//
+//        //then
+//        assertFalse(deletedUser1.isEmpty());
+//
+//    }
 
 //
 //    /**

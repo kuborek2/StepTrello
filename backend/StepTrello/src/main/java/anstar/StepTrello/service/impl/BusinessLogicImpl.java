@@ -152,11 +152,7 @@ public class BusinessLogicImpl implements BusinessLogic {
     // Notes
     @Override
     public Optional<NoteDto> addNote(NoteDto noteDto) {
-
-        System.out.println(noteDto);
-
         noteRepository.save(noteDtoToNote.convert(noteDto));
-
         return  Optional.ofNullable(noteDto);
     }
 
@@ -176,17 +172,18 @@ public class BusinessLogicImpl implements BusinessLogic {
 
     @Override
     public Optional<NoteDto> updateNote(NoteDto noteDto) {
-        Note note = noteRepository.findNoteByNoteId(noteDto.getNoteId());
-        if(note != null){
+        Optional<Note> note = Optional.ofNullable(noteRepository.findNoteByNoteId(noteDto.getNoteId()));
+        if(note.isPresent()){
             Note noteBuilder = new Note.Builder()
-                    .note_id(note.getNoteId())
+                    .note_id(noteDto.getNoteId())
                     .title(noteDto.getTitle())
                     .description(noteDto.getNoteContent())
                     .board_id(noteDto.getBoardId())
                     .build();
             noteRepository.save(noteBuilder);
+            return Optional.ofNullable(noteDto);
         }
-        return Optional.ofNullable(noteDto);
+        return Optional.empty();
     }
 
     // Tag
