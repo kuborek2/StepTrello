@@ -2,8 +2,8 @@ package anstar.StepTrello.service.impl;
 
 import anstar.StepTrello.Entity.Board;
 import anstar.StepTrello.Entity.Note;
+import anstar.StepTrello.Entity.Role;
 import anstar.StepTrello.Entity.User;
-import anstar.StepTrello.enums.Tags;
 import anstar.StepTrello.mapper.Converter;
 import anstar.StepTrello.model.BoardDto;
 import anstar.StepTrello.model.NoteDto;
@@ -11,19 +11,25 @@ import anstar.StepTrello.model.UserDto;
 
 import anstar.StepTrello.repository.BoardRepository;
 import anstar.StepTrello.repository.NoteRepository;
+import anstar.StepTrello.repository.RoleRepository;
 import anstar.StepTrello.repository.UserRepository;
 import anstar.StepTrello.service.BusinessLogic;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Service
-public class BusinessLogicImpl implements BusinessLogic {
+public class BusinessLogicImpl implements BusinessLogic, UserDetailsService {
 
     private final UserRepository userRepository;
     private final BoardRepository boardRepository;
@@ -36,6 +42,8 @@ public class BusinessLogicImpl implements BusinessLogic {
     private final Converter<NoteDto,Note> noteToNoteDto;
     private final Converter<Note,NoteDto> noteDtoToNote;
     private final Converter<ArrayList<NoteDto>, ArrayList<Note>> notesToNoteDto;
+    private final RoleRepository roleRepository;
+    private final PasswordEncoder passwordEncoder;
 
 
 
@@ -47,7 +55,7 @@ public class BusinessLogicImpl implements BusinessLogic {
                              Converter<ArrayList<BoardDto>, ArrayList<Board>> boardToBoardDto,
                              Converter<Board, BoardDto> boardDtoToBoard,
                              Converter<NoteDto, Note> noteToNoteDto, Converter<Note, NoteDto> noteDtoToNote,
-                             Converter<ArrayList<NoteDto>, ArrayList<Note>> notesToNoteDto) {
+                             Converter<ArrayList<NoteDto>, ArrayList<Note>> notesToNoteDto, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.boardRepository = boardRepository;
         this.noteRepository = noteRepository;
@@ -59,21 +67,41 @@ public class BusinessLogicImpl implements BusinessLogic {
         this.noteToNoteDto = noteToNoteDto;
         this.noteDtoToNote = noteDtoToNote;
         this.notesToNoteDto = notesToNoteDto;
+        this.roleRepository = roleRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = userRepository.findUserByUsername(username);
+
+        if (user == null) {
+            log.error("User not found in database");
+            throw new UsernameNotFoundException("User not found in database");
+        }else {
+            log.info("User found in the database: {}", username);
+        }
+        Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
+        user.getRoles().forEach(role -> {
+            authorities.add(new SimpleGrantedAuthority(role.getName()));
+        });
+        log.info("Authorities check: "+authorities);
+        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), authorities);
     }
 
     // User
     @Override
-    public Optional<UserDto> saveUser(UserDto userDto) {
+    public Optional<User> saveUser(UserDto userDto) {
 
         System.out.println(userDto);
         Optional<User> userOptional = Optional.ofNullable(userRepository.findUserByUsername(userDto.getLogin()));
         if(userOptional.isPresent()){
             throw new IllegalStateException("Login taken");
         }
+        userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
 
-        userRepository.save(userDtoToUser.convert(userDto));
 
-        return  Optional.ofNullable(userDto);
+        return  Optional.ofNullable(userRepository.save(userDtoToUser.convert(userDto)));
     }
 
 
@@ -152,11 +180,7 @@ public class BusinessLogicImpl implements BusinessLogic {
     // Notes
     @Override
     public Optional<NoteDto> addNote(NoteDto noteDto) {
-
-        System.out.println(noteDto);
-
         noteRepository.save(noteDtoToNote.convert(noteDto));
-
         return  Optional.ofNullable(noteDto);
     }
 
@@ -176,17 +200,18 @@ public class BusinessLogicImpl implements BusinessLogic {
 
     @Override
     public Optional<NoteDto> updateNote(NoteDto noteDto) {
-        Note note = noteRepository.findNoteByNoteId(noteDto.getNoteId());
-        if(note != null){
+        Optional<Note> note = Optional.ofNullable(noteRepository.findNoteByNoteId(noteDto.getNoteId()));
+        if(note.isPresent()){
             Note noteBuilder = new Note.Builder()
-                    .note_id(note.getNoteId())
+                    .note_id(noteDto.getNoteId())
                     .title(noteDto.getTitle())
                     .description(noteDto.getNoteContent())
                     .board_id(noteDto.getBoardId())
                     .build();
             noteRepository.save(noteBuilder);
+            return Optional.ofNullable(noteDto);
         }
-        return Optional.ofNullable(noteDto);
+        return Optional.empty();
     }
 
     // Tag
@@ -214,5 +239,25 @@ public class BusinessLogicImpl implements BusinessLogic {
         ArrayList<Board> boardArrayList = boardRepository.findBoardByOwnerLogin(userName);
         return boardToBoardDto.convert(boardArrayList);
     }
+
+    @Override
+    public Role saveRole(Role role){
+        log.info("Saving role to database");
+        return roleRepository.save(role);
+    }
+
+    @Override
+    public User addRoleToUser (String login, String roleName){
+        log.info("Finding user by name");
+        User user = userRepository.findUserByUsername(login);
+        log.info("Finding role by name");
+        Role role = roleRepository.findByName(roleName);
+        log.info("Adding role to user ");
+        user.getRoles().add(role);
+        log.info("Updating user role;");
+        User returnedUser = userRepository.save(user);
+        return returnedUser;
+    }
+
 
 }

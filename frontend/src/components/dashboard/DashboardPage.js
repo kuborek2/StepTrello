@@ -44,9 +44,11 @@ const DashboardPage = () => {
 
     useEffect(() => {
         if( login.userName !== ""){
+            const saved = localStorage.getItem("access_token");
+            const initial = JSON.parse(saved);
             setIsBLockerOut(blockerDisplayOption.visable)
             setIsLoading(blockerDisplayOption.visable)
-            BoardUtils.requestBoards(login.userName, requestBoardsSettled, requestBoardsRejected)
+            BoardUtils.requestBoards(login.userName, initial, requestBoardsSettled, requestBoardsRejected)
             setIsBLockerOut(blockerDisplayOption.hidden)
             setIsLoading(blockerDisplayOption.hidden)
         }

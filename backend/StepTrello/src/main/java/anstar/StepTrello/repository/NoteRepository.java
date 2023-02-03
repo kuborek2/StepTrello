@@ -16,9 +16,9 @@ import java.util.Optional;
 @Transactional
 public interface NoteRepository extends JpaRepository<Note,String>, CrudRepository<Note,String> {
 
-    @Modifying
-    @Query(value = "DELETE FROM Note nt where nt.noteId = :noteId")
-    void deleteNoteByNoteId(@Param("noteId") Integer noteId);
+    Note findNoteByNoteId(int noteId);
+
+    void deleteNoteByNoteId(int noteId);
 
     @Query(value = "SELECT title FROM Note where title like :title")
     Optional<Note> findNoteByTitle(@Param("title" ) String title );

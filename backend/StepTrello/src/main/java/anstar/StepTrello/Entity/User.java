@@ -1,10 +1,20 @@
 package anstar.StepTrello.Entity;
 
-import lombok.Getter;
+import lombok.*;
+
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
+
+import static javax.persistence.FetchType.EAGER;
 
 @Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
+@Builder
 @Entity
 @Table(name = "users")
 public class User implements Serializable {
@@ -22,41 +32,12 @@ public class User implements Serializable {
     @Column(name = "password")
     private String password;
 
-    private User(Builder builder){
-        username = builder.user_name;
-        email = builder.email;
-        password = builder.password;
-    }
-    public User() {}
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Collection<Role> roles = new ArrayList<>();
 
-    public static final class Builder {
-        private String user_name;
-        private String email;
-        private String password;
-
-        public Builder () {
-        }
-
-        public Builder user_name(String user_name) {
-            this.user_name = user_name;
-            return this;
-        }
-
-        public Builder email(String email) {
-            this.email = email;
-            return this;
-        }
-
-        public Builder password(String password) {
-            this.password = password;
-            return this;
-        }
-
-        public User build() {
-            return new User(this);
-        }
-
-    }
 
 
 }
+
+
+

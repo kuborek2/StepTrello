@@ -1,4 +1,5 @@
 import axios from "axios";
+import qs from 'qs';
 
 /** 
  * Example user needed
@@ -12,17 +13,22 @@ import axios from "axios";
 
 const requestUserRegistration = (newUser, settled, rejected) => {
   return axios({
-    method: 'put',
+    method: 'post',
     url: 'http://localhost:8080/api/user',
     data: newUser
   }).then(settled, rejected)
     .catch((err) => {console.log(err)})
 }
 
-const requestLogIn = (credentials ,settled, rejected) => {
+const requestLogIn = (credentials, settled, rejected) => {
+  const dataToSend = {
+    username: credentials.login,
+    password: credentials.password
+  }
   return axios({
-    method: 'get',
-    url: 'http://localhost:8080/api/user/?login='+credentials.login,
+    method: 'post',
+    url: 'http://localhost:8080/login',
+    data: qs.stringify(dataToSend)
   }).then(settled, rejected)
     .catch((err) => {console.log(err)})
 }
